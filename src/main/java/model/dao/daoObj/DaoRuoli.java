@@ -117,9 +117,11 @@ public class DaoRuoli implements IDaoRuoli{
 
 		try(Connection conn = DriverManager.getConnection(dbAddress);
 				PreparedStatement stm = conn.prepareStatement(
-						"update RUOLI set RUOLO = ?")){
+						"update RUOLI set RUOLO = ? where ID = ?")){
 			
 			stm.setString(1, r.getRuolo());
+			
+			stm.setInt(2, r.getId());
 			
 			if(stm.executeUpdate()>0) {
 				return true;
