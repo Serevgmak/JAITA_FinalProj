@@ -1,0 +1,34 @@
+drop schema if exists NOPLAY;
+create schema NOPLAY;
+use NOPLAY;
+
+drop table if exists AZIENDE;
+create table AZIENDE(
+ID int primary key auto_increment,
+RAGIONE_SOCIALE varchar(50),
+PIVA int,
+INDIRIZZO varchar(100),
+EMAIL varchar(50),
+NTELEFONO int
+);
+
+drop table if exists RUOLI;
+create table RUOLI(
+id int primary key auto_increment,
+RUOLO varchar(50)
+);
+
+drop table if exists DIPENDENTI;
+create table DIPENDENTI(
+ID int primary key auto_increment,
+NOME varchar(50),
+COGNOME varchar(50),
+-- FOTO varchar(200) 
+DDN date,
+STIPENDIO double,
+DDA date,
+ID_AZIENDA int,
+ID_RUOLO int,
+foreign key (ID_AZIENDA) references AZIENDE(ID),
+foreign key (ID_RUOLO) references RUOLI(ID)
+);
