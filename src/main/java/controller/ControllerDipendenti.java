@@ -16,7 +16,6 @@ import com.google.gson.GsonBuilder;
 import model.Response;
 import model.dao.DaoFactory;
 import model.dao.idao.IDaoDipendenti;
-import model.entities.Azienda;
 import model.entities.Dipendente;
 
 /**
@@ -86,8 +85,22 @@ public class ControllerDipendenti extends HttpServlet {
 	}
 	
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		//response.getWriter().append("Served at: ").append(request.getContextPath());
+		String path = request.getPathInfo();
+		Response ris = new Response("", null);
+		
+
+		if(path == null || path.equals("/")) {
+			ris.setStatus("1500");			
+		} else {
+			int id = Integer.parseInt(path.substring(1));
+			if(dao.delete(id))
+				ris.setStatus("200");
+			else
+				ris.setStatus("1500");
+		}		
+		
+		response.setContentType("application/json");
+		response.getWriter().append(gson.toJson(ris)); 
 	}
 	
 	private Dipendente dipendenteFromRequest(HttpServletRequest request) throws IOException {
