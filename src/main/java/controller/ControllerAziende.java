@@ -87,15 +87,32 @@ public class ControllerAziende extends HttpServlet {
 	}
 	
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		//response.getWriter().append("Served at: ").append(request.getContextPath());
+		
+		String path = request.getPathInfo();
+		Response ris = new Response("", null);
+		
+
+		if(path == null || path.equals("/")) {
+			ris.setStatus("1500");			
+		} else {
+			int id = Integer.parseInt(path.substring(1));
+			if(dao.delete(id))
+				ris.setStatus("200");
+			else
+				ris.setStatus("1500");
+		}		
+		
+		response.setContentType("application/json");
+		response.getWriter().append(gson.toJson(ris)); 
+		
 	}
 	
 	
 	private Azienda aziendaFromRequest(HttpServletRequest request) throws IOException {
 		BufferedReader br = request.getReader();
 
-		String body = "";
+		String body = "";   
+		//comment 2
 		
 		String riga = null;
 		
