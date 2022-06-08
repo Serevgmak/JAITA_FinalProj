@@ -1,5 +1,6 @@
 package controller;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.List;
 
@@ -78,5 +79,24 @@ public class ControllerAziende extends HttpServlet {
 		// TODO Auto-generated method stub
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
+	
+	
+	private Azienda aziendaFromRequest(HttpServletRequest request) throws IOException {
+		BufferedReader br = request.getReader();
+
+		String body = "";
+		
+		String riga = null;
+		
+		while ((riga = br.readLine()) != null) {
+			body += riga;
+		}
+
+		Azienda az = gson.fromJson(body, Azienda.class);
+		
+		br.close();
+		return az;
+	}
+	
 
 }

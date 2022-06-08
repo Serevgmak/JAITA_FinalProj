@@ -1,5 +1,6 @@
 package controller;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.List;
 
@@ -15,7 +16,6 @@ import com.google.gson.GsonBuilder;
 import model.Response;
 import model.dao.DaoFactory;
 import model.dao.idao.IDaoRuoli;
-import model.entities.Azienda;
 import model.entities.Ruolo;
 
 /**
@@ -77,6 +77,24 @@ public class ControllerRuoli extends HttpServlet {
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
+	}
+	
+	
+	private Ruolo ruoloFromRequest(HttpServletRequest request) throws IOException {
+		BufferedReader br = request.getReader();
+
+		String body = "";
+		
+		String riga = null;
+		
+		while ((riga = br.readLine()) != null) {
+			body += riga;
+		}
+
+		Ruolo r = gson.fromJson(body, Ruolo.class);
+		
+		br.close();
+		return r;
 	}
 
 }
