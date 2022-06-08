@@ -13,7 +13,6 @@ public interface DaoFactory {
 
 	String DRIVER_MYSQL = "com.mysql.jdbc.Driver";
 	
-	// CAMBIARE NOME DELLA DB
 	String DB_ADDRESS = "jdbc:mysql://localhost:3306/noplay?user=root&password=root&useSSL=false&serverTimezone=UTC";
 	
 	static IDaoDipendenti makeD() {

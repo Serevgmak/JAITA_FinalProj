@@ -52,7 +52,6 @@ public class ControllerAziende extends HttpServlet {
 			
 		} else {
 			ris.setObject(dao.azienda(Integer.parseInt(path.substring(1))));
-			// comment
 		}
 		
 		
