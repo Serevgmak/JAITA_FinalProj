@@ -16,6 +16,7 @@ import com.google.gson.GsonBuilder;
 import model.Response;
 import model.dao.DaoFactory;
 import model.dao.idao.IDaoRuoli;
+import model.entities.Azienda;
 import model.entities.Ruolo;
 
 /**
@@ -65,8 +66,18 @@ public class ControllerRuoli extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		//doGet(request, response);
+
+		Ruolo r = ruoloFromRequest(request);
+		Response ris = new Response("", null);
+		
+		if(dao.add(r)) {
+			ris.setStatus("200");
+		} else {
+			ris.setStatus("1500");
+		}
+		
+		response.setContentType("application/json");
+		response.getWriter().append(gson.toJson(ris));
 	}
 	
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
