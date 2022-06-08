@@ -40,25 +40,19 @@ public class ControllerAziende extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		Response ris = new Response("", null);
 		String path = request.getPathInfo();
 		
 		if(path == null || path.equals("/")) {
-			//ris.setObject(gson.toJson(dao.aziende()));
 			ris.setObject(dao.aziende());
 			if(((List<Azienda>) ris.getObject()).size() > 0)
-				//return new Response("200", dao.read());
 				ris.setStatus("200");
-				//ris.setObject(dao.read());
 			else
 				ris.setStatus("1500");
 			
 		} else {
-			//ris.setObject(gson.toJson(dao.azienda(Integer.parseInt(path.substring(1)))));
 			ris.setObject(dao.azienda(Integer.parseInt(path.substring(1))));
 		}
-			//ris. = gson.toJson(dao.readGioco(Integer.parseInt(path.substring(1))));
 		
 		
 		
