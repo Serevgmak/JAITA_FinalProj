@@ -1,5 +1,6 @@
 package controller;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.List;
 
@@ -52,7 +53,6 @@ public class ControllerAziende extends HttpServlet {
 			
 		} else {
 			ris.setObject(dao.azienda(Integer.parseInt(path.substring(1))));
-			// comment
 		}
 		
 		
@@ -65,19 +65,76 @@ public class ControllerAziende extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+
+		Azienda az = aziendaFromRequest(request);
+		Response ris = new Response("", null);
 		
-		//doGet(request, response);
+		if(dao.add(az)) {
+			ris.setStatus("200");
+		} else {
+			ris.setStatus("1500");
+		}
+		
+		response.setContentType("application/json");
+		response.getWriter().append(gson.toJson(ris));
+		
+		
 	}
 	
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		//response.getWriter().append("Served at: ").append(request.getContextPath());
+
+		Azienda az = aziendaFromRequest(request);
+		Response ris = new Response("", null);
+		
+		if(dao.update(az))
+			ris.setStatus("200");
+		else
+			ris.setStatus("1500");
+		
+		response.setContentType("application/json");
+		response.getWriter().append(gson.toJson(ris));
+		
 	}
 	
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		//response.getWriter().append("Served at: ").append(request.getContextPath());
+		
+		String path = request.getPathInfo();
+		Response ris = new Response("", null);
+		
+
+		if(path == null || path.equals("/")) {
+			ris.setStatus("1500");			
+		} else {
+			int id = Integer.parseInt(path.substring(1));
+			if(dao.delete(id))
+				ris.setStatus("200");
+			else
+				ris.setStatus("1500");
+		}		
+		
+		response.setContentType("application/json");
+		response.getWriter().append(gson.toJson(ris)); 
+		
 	}
+	
+	
+	private Azienda aziendaFromRequest(HttpServletRequest request) throws IOException {
+		BufferedReader br = request.getReader();
+
+		String body = "";   
+		//comment 2
+		
+		String riga = null;
+		
+		while ((riga = br.readLine()) != null) {
+			body += riga;
+		}
+
+		Azienda az = gson.fromJson(body, Azienda.class);
+		
+		br.close();
+		return az;
+	}
+	
 
 }
