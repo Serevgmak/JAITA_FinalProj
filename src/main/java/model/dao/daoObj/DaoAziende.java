@@ -126,13 +126,15 @@ public class DaoAziende implements IDaoAziende{
 
 		try(Connection conn = DriverManager.getConnection(dbAddress);
 				PreparedStatement stm = conn.prepareStatement(
-						"update AZIENDE set RAGIONE_SOCIALE = ?, PIVA = ?, INDIRIZZO = ?, EMAIL = ?, NTELEFONO = ?")){
+						"update AZIENDE set RAGIONE_SOCIALE = ?, PIVA = ?, INDIRIZZO = ?, EMAIL = ?, NTELEFONO = ? where ID = ?")){
 			
 			stm.setString(1, a.getRagioneSociale());
 			stm.setInt(2, a.getpIva());
 			stm.setString(3, a.getIndirizzo());
 			stm.setString(4, a.getMail());
 			stm.setInt(5, a.getTelefono());
+			
+			stm.setInt(6, a.getId());
 			
 			if(stm.executeUpdate()>0) {
 				return true;

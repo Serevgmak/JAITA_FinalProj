@@ -82,8 +82,18 @@ public class ControllerAziende extends HttpServlet {
 	}
 	
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		//response.getWriter().append("Served at: ").append(request.getContextPath());
+
+		Azienda az = aziendaFromRequest(request);
+		Response ris = new Response("", null);
+		
+		if(dao.update(az))
+			ris.setStatus("200");
+		else
+			ris.setStatus("1500");
+		
+		response.setContentType("application/json");
+		response.getWriter().append(gson.toJson(ris));
+		
 	}
 	
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
