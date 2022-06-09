@@ -52,9 +52,14 @@ public class ControllerDipendenti extends HttpServlet {
 			else
 				ris.setStatus("1500");
 			
-		} else {
+		} else if (path.startsWith("/r")){
+			ris.setObject(dao.dipendenteRuolo(Integer.parseInt(path.substring(2))));
+			if(((List<Dipendente>) ris.getObject()).size() > 0)
+				ris.setStatus("200");
+			else
+				ris.setStatus("1500");
+		} else
 			ris.setObject(dao.dipendente(Integer.parseInt(path.substring(1))));
-		}
 		
 		
 		
