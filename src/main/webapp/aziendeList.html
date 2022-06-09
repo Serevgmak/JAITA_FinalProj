@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="styleAziende.css">
+</head>
+
+<body>
+    <div class="container-foil">
+        <div class="row align-items-start">
+            <div class="col-2 margine">
+                <a href="index.html"><img src="logo.png" alt="logoNoPlay" class="img-thumbnail right"></a>
+                <button class="btn btn-primary aggiungiAzienda" type="submit" data-toggle="modal"
+                    data-target=".exampleAddCenter">Aggiungi</button>
+            </div>
+            <div class="col sfondo">
+                <h1 class="text-center display-1">Le nostre aziende</h1>
+                <hr>
+                <div class="jumbotron text-center vertical-center">
+                    <img src="logoAzienda2.png" alt="logoAzienda" class="logoAziende">
+                    <h1 class="display-4">Pinco Pallino SPA</h1>
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".exampleModalCenter">
+                        Dettagli
+                    </button>
+
+                    <!-- Modal -->
+                    <div class="modal fade exampleModalCenter" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <h1>Pinco Pallino</h1>
+                                    <h5>Partita Iva:</h5>
+                                    <h4>532532523</h4>
+                                    <h5>Indirizzo:</h5>
+                                    <h4>Via tal dei tali</h4>
+                                    <h5>Mail:</h5>
+                                    <h4>pincopallo@pincopallo.it</h4>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary">Save changes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <a data-toggle="modal" data-target=".exampleModalCenter">
+                    <div class="jumbotron text-center vertical-center">
+                        <img src="logoAzienda.png" alt="logoAzienda" class="logoAziende">
+                        <h1 class="display-4">Pinco Pallino SPA</h1>
+                    </div>
+                </a>
+            </div>
+            <div class="col-2 margine">
+
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade exampleAddCenter" tabindex="-1" role="dialog" aria-labelledby="exampleAddCenterTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleAddLongTitle">Aggiungi azienda</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body text-center">
+                    <h5>Inserisci nome azienda:</h5>
+                    <input type="text">
+                    <h5>Partita Iva:</h5>
+                    <input type="number">
+                    <h5>Indirizzo:</h5>
+                    <input type="text">
+                    <h5>Mail:</h5>
+                    <input type="mail">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annulla</button>
+                    <button type="button" class="btn btn-primary">Aggiungi</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
