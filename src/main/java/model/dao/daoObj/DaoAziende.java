@@ -33,7 +33,7 @@ public class DaoAziende implements IDaoAziende{
 				ris.add(new Azienda(
 							rs.getInt("id"),
 							rs.getString("ragione_sociale"),
-							rs.getInt("piva"),
+							rs.getLong("piva"),
 							rs.getString("indirizzo"),
 							rs.getString("email"),
 							rs.getInt("ntelefono")));
@@ -62,7 +62,7 @@ public class DaoAziende implements IDaoAziende{
 				ris = new Azienda(
 							rs.getInt("id"),
 							rs.getString("ragione_sociale"),
-							rs.getInt("piva"),
+							rs.getLong("piva"),
 							rs.getString("indirizzo"),
 							rs.getString("email"),
 							rs.getInt("ntelefono"));
@@ -85,7 +85,7 @@ public class DaoAziende implements IDaoAziende{
 						+ "values(?,?,?,?,?)")){
 			
 			stm.setString(1, a.getRagioneSociale());
-			stm.setInt(2, a.getpIva());
+			stm.setLong(2, a.getpIva());
 			stm.setString(3, a.getIndirizzo());
 			stm.setString(4, a.getMail());
 			stm.setInt(5, a.getTelefono());
@@ -129,10 +129,10 @@ public class DaoAziende implements IDaoAziende{
 						"update AZIENDE set RAGIONE_SOCIALE = ?, PIVA = ?, INDIRIZZO = ?, EMAIL = ?, NTELEFONO = ? where ID = ?")){
 			
 			stm.setString(1, a.getRagioneSociale());
-			stm.setInt(2, a.getpIva());
+			stm.setLong(2, a.getpIva());
 			stm.setString(3, a.getIndirizzo());
 			stm.setString(4, a.getMail());
-			stm.setInt(5, a.getTelefono());
+			stm.setInt(5, a.getTelefono()); 
 			
 			stm.setInt(6, a.getId());
 			

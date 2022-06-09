@@ -159,14 +159,19 @@ public class DaoDipendenti implements IDaoDipendenti{
 	}
 
 	@Override
-	public List<Dipendente> dipendenteRuolo(Ruolo r) {
+	
+	// Ho cambiato da dipendenteRuolo(Ruolo r)
+	// a dipendenteRuolo(int idRuolo)
+	// e anche nel stm.setInt(1, r.getId());
+	public List<Dipendente> dipendenteRuolo(int idRuolo) {
 		
 		List<Dipendente> ris = new ArrayList<Dipendente>();
 		
 		try(Connection conn = DriverManager.getConnection(dbAddress);
 			PreparedStatement stm = conn.prepareStatement("select * from DIPENDENTI where ID_RUOLO = ?")){
 			
-			stm.setInt(1, r.getId());
+			//stm.setInt(1, r.getId());
+			stm.setInt(1, idRuolo);
 			
 			ResultSet rs = stm.executeQuery();
 			
