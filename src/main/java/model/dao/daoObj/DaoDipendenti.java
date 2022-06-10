@@ -37,9 +37,11 @@ public class DaoDipendenti implements IDaoDipendenti{
 							rs.getInt("id"),
 							rs.getString("nome"),
 							rs.getString("cognome"),
-							rs.getDate("ddn").toLocalDate(),
+							//rs.getDate("ddn").toLocalDate(),
+							rs.getDate("ddn"),
 							rs.getDouble("stipendio"),
-							rs.getDate("dda").toLocalDate(),
+							//rs.getDate("dda").toLocalDate(),
+							rs.getDate("dda"),
 							rs.getInt("id_ruolo"),
 							rs.getInt("id_azienda")));
 			}
@@ -68,9 +70,11 @@ public class DaoDipendenti implements IDaoDipendenti{
 						rs.getInt("id"),
 						rs.getString("nome"),
 						rs.getString("cognome"),
-						rs.getDate("ddn").toLocalDate(),
+						//rs.getDate("ddn").toLocalDate(),
+						rs.getDate("ddn"),
 						rs.getDouble("stipendio"),
-						rs.getDate("dda").toLocalDate(),
+						//rs.getDate("dda").toLocalDate(),
+						rs.getDate("dda"),
 						rs.getInt("id_ruolo"),
 						rs.getInt("id_azienda"));
 			}
@@ -93,9 +97,11 @@ public class DaoDipendenti implements IDaoDipendenti{
 			
 			stm.setString(1, d.getNome());
 			stm.setString(2, d.getCognome());
-			stm.setDate(3, Date.valueOf(d.getDdn()));
+			//stm.setDate(3, Date.valueOf(d.getDdn()));
+			stm.setDate(3, new Date(d.getDdn().getTime()));
 			stm.setDouble(4, d.getStipendio());
-			stm.setDate(5, Date.valueOf(d.getDda()));
+			//stm.setDate(5, Date.valueOf(d.getDda()));
+			stm.setDate(5, new Date(d.getDda().getTime()));
 			stm.setInt(6, d.getIdAzienda());
 			stm.setInt(7, d.getIdRuolo());
 			
@@ -139,9 +145,11 @@ public class DaoDipendenti implements IDaoDipendenti{
 			
 			stm.setString(1, d.getNome());
 			stm.setString(2, d.getCognome());
-			stm.setDate(3, Date.valueOf(d.getDdn()));
+			//stm.setDate(3, Date.valueOf(d.getDdn()));
+			stm.setDate(3, new Date(d.getDdn().getTime()));
 			stm.setDouble(4, d.getStipendio());
-			stm.setDate(5, Date.valueOf(d.getDda()));
+			//stm.setDate(5, Date.valueOf(d.getDda()));
+			stm.setDate(5, new Date(d.getDda().getTime()));
 			stm.setInt(6, d.getIdAzienda());
 			stm.setInt(7, d.getIdRuolo());
 			
@@ -181,9 +189,51 @@ public class DaoDipendenti implements IDaoDipendenti{
 							rs.getInt("id"),
 							rs.getString("nome"),
 							rs.getString("cognome"),
-							rs.getDate("ddn").toLocalDate(),
+							//rs.getDate("ddn").toLocalDate(),
+							rs.getDate("ddn"),
 							rs.getDouble("stipendio"),
-							rs.getDate("dda").toLocalDate(),
+							//rs.getDate("dda").toLocalDate(),
+							rs.getDate("dda"),
+							rs.getInt("id_ruolo"),
+							rs.getInt("id_azienda")));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return ris;
+		
+	}
+	
+	
+	
+	
+	
+	
+	public List<Dipendente> dipendenteAzienda(int idAzienda) {
+		
+		List<Dipendente> ris = new ArrayList<Dipendente>();
+		
+		try(Connection conn = DriverManager.getConnection(dbAddress);
+			PreparedStatement stm = conn.prepareStatement("select * from DIPENDENTI where ID_AZIENDA = ?")){
+			
+			//stm.setInt(1, r.getId());
+			stm.setInt(1, idAzienda);
+			
+			ResultSet rs = stm.executeQuery();
+			
+			while(rs.next()) {
+				
+				ris.add(new Dipendente(
+							rs.getInt("id"),
+							rs.getString("nome"),
+							rs.getString("cognome"),
+							//rs.getDate("ddn").toLocalDate(),
+							rs.getDate("ddn"),
+							rs.getDouble("stipendio"),
+							//rs.getDate("dda").toLocalDate(),
+							rs.getDate("dda"),
 							rs.getInt("id_ruolo"),
 							rs.getInt("id_azienda")));
 			}

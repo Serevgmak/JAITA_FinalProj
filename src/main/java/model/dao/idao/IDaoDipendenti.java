@@ -19,4 +19,5 @@ public interface IDaoDipendenti {
 	
 	//List<Dipendente> dipendenteRuolo(Ruolo r);
 	List<Dipendente> dipendenteRuolo(int idRuolo);
+	List<Dipendente> dipendenteAzienda(int idAzienda);
 }

@@ -1,6 +1,7 @@
 package model.entities;
 
-import java.time.LocalDate;
+//import java.time.LocalDate;
+import java.util.Date;
 
 public class Dipendente {
 
@@ -8,13 +9,15 @@ public class Dipendente {
 	String nome;
 	String cognome;
 	// foto?
-	LocalDate ddn;
+	//LocalDate ddn;
+	Date ddn;
 	double stipendio;
-	LocalDate dda;
+	//LocalDate dda;
+	Date dda;
 	int idRuolo;
 	int idAzienda;
 	
-	public Dipendente(int id, String nome, String cognome, LocalDate ddn, double stipendio, LocalDate dda, int idRuolo,
+	public Dipendente(int id, String nome, String cognome, Date ddn, double stipendio, Date dda, int idRuolo,
 			int idAzienda) {
 		super();
 		this.id = id;
@@ -55,11 +58,11 @@ public class Dipendente {
 		this.cognome = cognome;
 	}
 
-	public LocalDate getDdn() {
+	public Date getDdn() {
 		return ddn;
 	}
 
-	public void setDdn(LocalDate ddn) {
+	public void setDdn(Date ddn) {
 		this.ddn = ddn;
 	}
 
@@ -71,11 +74,11 @@ public class Dipendente {
 		this.stipendio = stipendio;
 	}
 
-	public LocalDate getDda() {
+	public Date getDda() {
 		return dda;
 	}
 
-	public void setDda(LocalDate dda) {
+	public void setDda(Date dda) {
 		this.dda = dda;
 	}
 

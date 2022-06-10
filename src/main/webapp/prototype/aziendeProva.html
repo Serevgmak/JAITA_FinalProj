@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aziende</title>
+    <script type="">
+		app.use("/static", express.static('./static/'));
+	</script>
+    <script src="static/jquery-3.6.0.min.js"></script>
+    <script src="static/mainAziende.js"></script>
+    <style>
+        .tableCol {
+            width: 4cm;
+        }
+    </style>
+</head>
+<body> 
+    <br><br>
+    
+    <table>
+        <thead>
+            <tr>
+                <td colspan="2"><b>Aziende</b></td>
+            </tr>
+            <tr>
+                <td><input class="tableCol" type="text" name="" id="ragioneSociale" placeholder="ragione sociale.."></td>
+                <td><input class="tableCol"  type="number" name="" id="pIva" placeholder="piva.."></td>
+                <td><input class="tableCol"  type="text" name="" id="indirizzo" placeholder="indirizzo.."></td>
+                <td><input class="tableCol"  type="text" name="" id="mail" placeholder="email.."></td>
+                <td><input class="tableCol"  type="number" name="" id="telefono" placeholder="ntel.."></td>
+                <td><button id="addAz">Add</button></td>
+            </tr>
+        </thead>
+        <tbody id="outputAz">
+            <tr><td>&nbsp;</td></tr>
+        </tbody>
+    </table>
+
+	<br><br>
+	<span>
+		<h3 id="dettLabel"></h3>
+		<p id="dettOut"></p>
+		<h3 id="dettDipLabel"></h3>
+		<p id="dettAzDip"></p>
+	</span>
+	<img src="C:\Users\m3107\Desktop\GIT.bmp" style="width:300px;height:250px">
+</body>
+</html>
