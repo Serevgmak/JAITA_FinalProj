@@ -85,7 +85,7 @@ public class ControllerDipendenti extends HttpServlet {
 		if(dao.add(dip)) {
 			ris.setStatus("200");
 		} else {
-			ris.setStatus("1500");
+			ris.setStatus("1500"); 
 		}
 		
 		response.setContentType("application/json");
