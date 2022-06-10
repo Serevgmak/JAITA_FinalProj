@@ -17,5 +17,7 @@ public interface IDaoDipendenti {
 		
 	boolean update(Dipendente d);
 	
-	List<Dipendente> dipendenteRuolo(Ruolo r);
+	//List<Dipendente> dipendenteRuolo(Ruolo r);
+	List<Dipendente> dipendenteRuolo(int idRuolo);
+	List<Dipendente> dipendenteAzienda(int idAzienda);
 }
