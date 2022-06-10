@@ -23,7 +23,7 @@ create table DIPENDENTI(
 ID int primary key auto_increment,
 NOME varchar(50),
 COGNOME varchar(50),
--- FOTO varchar(200) 
+FOTO varchar(200), --modifica aggiunta foto
 DDN date,
 STIPENDIO double,
 DDA date,

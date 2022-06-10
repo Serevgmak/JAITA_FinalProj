@@ -37,6 +37,7 @@ public class DaoDipendenti implements IDaoDipendenti{
 							rs.getInt("id"),
 							rs.getString("nome"),
 							rs.getString("cognome"),
+							rs.getString("foto"), // modifica aggiunta foto
 							rs.getDate("ddn").toLocalDate(),
 							rs.getDouble("stipendio"),
 							rs.getDate("dda").toLocalDate(),
@@ -68,6 +69,7 @@ public class DaoDipendenti implements IDaoDipendenti{
 						rs.getInt("id"),
 						rs.getString("nome"),
 						rs.getString("cognome"),
+						rs.getString("foto"), // modifica aggiunta foto
 						rs.getDate("ddn").toLocalDate(),
 						rs.getDouble("stipendio"),
 						rs.getDate("dda").toLocalDate(),
@@ -88,16 +90,17 @@ public class DaoDipendenti implements IDaoDipendenti{
 		
 		try(Connection conn = DriverManager.getConnection(dbAddress);
 				PreparedStatement stm = conn.prepareStatement(
-						"insert into DIPENDENTI(NOME, COGNOME, DDN, STIPENDIO, DDA, ID_AZIENDA, ID_RUOLO) "
-						+ "values(?,?,?,?,?,?,?)")){
+						"insert into DIPENDENTI(NOME, COGNOME, FOTO, DDN, STIPENDIO, DDA, ID_AZIENDA, ID_RUOLO) "
+						+ "values(?,?,?,?,?,?,?,?)")){ // modifica aggiunta foto
 			
 			stm.setString(1, d.getNome());
 			stm.setString(2, d.getCognome());
-			stm.setDate(3, Date.valueOf(d.getDdn()));
-			stm.setDouble(4, d.getStipendio());
-			stm.setDate(5, Date.valueOf(d.getDda()));
-			stm.setInt(6, d.getIdAzienda());
-			stm.setInt(7, d.getIdRuolo());
+			stm.setString(3, d.getFoto()); // modifica aggiunta foto
+			stm.setDate(4, Date.valueOf(d.getDdn()));
+			stm.setDouble(5, d.getStipendio());
+			stm.setDate(6, Date.valueOf(d.getDda()));
+			stm.setInt(7, d.getIdAzienda());
+			stm.setInt(8, d.getIdRuolo());
 			
 			if(stm.executeUpdate()>0) {
 				return true;
@@ -131,21 +134,22 @@ public class DaoDipendenti implements IDaoDipendenti{
 	}
 
 	@Override
-	public boolean update(Dipendente d) {
+	public boolean update(Dipendente d) { // modifica aggiunta foto
 		
 		try(Connection conn = DriverManager.getConnection(dbAddress);
 				PreparedStatement stm = conn.prepareStatement(
-						"update DIPENDENTI set NOME = ?, COGNOME = ?, DDN = ?, STIPENDIO = ?, DDA = ?, ID_AZIENDA = ?, ID_RUOLO = ? where ID = ?")){
+						"update DIPENDENTI set NOME = ?, COGNOME = ?, FOTO = ?, DDN = ?, STIPENDIO = ?, DDA = ?, ID_AZIENDA = ?, ID_RUOLO = ? where ID = ?")){
 			
 			stm.setString(1, d.getNome());
 			stm.setString(2, d.getCognome());
-			stm.setDate(3, Date.valueOf(d.getDdn()));
-			stm.setDouble(4, d.getStipendio());
-			stm.setDate(5, Date.valueOf(d.getDda()));
-			stm.setInt(6, d.getIdAzienda());
-			stm.setInt(7, d.getIdRuolo());
+			stm.setString(3, d.getFoto()); // modifica aggiunta foto
+			stm.setDate(4, Date.valueOf(d.getDdn()));
+			stm.setDouble(5, d.getStipendio());
+			stm.setDate(6, Date.valueOf(d.getDda()));
+			stm.setInt(7, d.getIdAzienda());
+			stm.setInt(8, d.getIdRuolo());
 			
-			stm.setInt(8, d.getId());
+			stm.setInt(9, d.getId());
 			
 			if(stm.executeUpdate()>0) {
 				return true;
@@ -181,6 +185,7 @@ public class DaoDipendenti implements IDaoDipendenti{
 							rs.getInt("id"),
 							rs.getString("nome"),
 							rs.getString("cognome"),
+							rs.getString("foto"), // modifica aggiunta foto
 							rs.getDate("ddn").toLocalDate(),
 							rs.getDouble("stipendio"),
 							rs.getDate("dda").toLocalDate(),

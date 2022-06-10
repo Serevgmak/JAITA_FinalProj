@@ -7,19 +7,20 @@ public class Dipendente {
 	int id;
 	String nome;
 	String cognome;
-	// foto?
+	String foto;// modifica aggiunta foto
 	LocalDate ddn;
 	double stipendio;
 	LocalDate dda;
 	int idRuolo;
 	int idAzienda;
-	
-	public Dipendente(int id, String nome, String cognome, LocalDate ddn, double stipendio, LocalDate dda, int idRuolo,
+	// modifica aggiunta foto
+	public Dipendente(int id, String nome, String cognome, String foto, LocalDate ddn, double stipendio, LocalDate dda, int idRuolo,
 			int idAzienda) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.cognome = cognome;
+		this.foto = foto;
 		this.ddn = ddn;
 		this.stipendio = stipendio;
 		this.dda = dda;
@@ -54,6 +55,14 @@ public class Dipendente {
 	public void setCognome(String cognome) {
 		this.cognome = cognome;
 	}
+	// modifica aggiunta foto
+	public String getFoto() {
+		return foto;
+	}
+	// modifica aggiunta foto
+	public void setFoto(String foto) {
+		this.foto = foto;
+	}	
 
 	public LocalDate getDdn() {
 		return ddn;
