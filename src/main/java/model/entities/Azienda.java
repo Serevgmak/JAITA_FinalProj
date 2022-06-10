@@ -4,12 +4,12 @@ public class Azienda {
 
 	int id;
 	String ragioneSociale;
-	int pIva;
+	long pIva;
 	String indirizzo;
 	String mail;
 	int telefono;
 	
-	public Azienda(int id, String ragioneSociale, int pIva, String indirizzo, String mail, int telefono) {
+	public Azienda(int id, String ragioneSociale, long pIva, String indirizzo, String mail, int telefono) {
 		super();
 		this.id = id;
 		this.ragioneSociale = ragioneSociale;
@@ -39,11 +39,11 @@ public class Azienda {
 		this.ragioneSociale = ragioneSociale;
 	}
 
-	public int getpIva() {
+	public long getpIva() {
 		return pIva;
 	}
 
-	public void setpIva(int pIva) {
+	public void setpIva(long pIva) {
 		this.pIva = pIva;
 	}
 

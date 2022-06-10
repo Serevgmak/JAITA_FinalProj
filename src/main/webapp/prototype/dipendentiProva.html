@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dipendenti</title>
+    <script type="">
+		app.use("/static", express.static('./static/'));
+	</script>
+    <script src="static/jquery-3.6.0.min.js"></script>
+    <script src="static/mainDipendenti.js"></script>
+    <style>
+        .tableCol {
+            width: 3cm;
+        }
+    </style>
+</head>
+<body> 
+    <br><br>
+    
+    <table>
+        <thead>
+            <tr>
+                <td colspan="2"><b>Dipendenti</b></td>
+            </tr>
+            <tr>
+                <td><input class="tableCol" type="text" name="" id="nome" placeholder="nome.."></td>
+                <td><input class="tableCol" type="text" name="" id="cognome" placeholder="cognome.."></td>
+                <td><input class="tableCol"  type="date" name="" id="ddn"></td>
+                <td><input class="tableCol"  type="number" name="" id="stipendio" placeholder="stipendio.."></td>
+                <td><input class="tableCol"  type="date" name="" id="dda" placeholder="dda.."></td>
+                <td>
+                	<!--<label for="ruoli"> </label>  -->
+					<select  id="outR">
+					<!-- Per tutti i ruoli -->
+					</select>
+                </td>
+                <td>
+                	<!--<label for="aziende"> </label>  -->
+					<select  id="outAz">
+					<!-- Per tutti i ruoli -->
+					</select>
+                </td>
+                
+                <!--<td><input class="tableCol"  type="text" name="" id="ruolo" placeholder="ruolo.."></td>-->
+                <td><button id="addDip">Add</button></td>
+            </tr>
+            <tr>
+            	<td><input class="tableCol" type="text" name="" id="ruoloFilter" placeholder="ruolo.."></td>
+            	<td><button id="filter">Filtrare per ruolo</button></td>
+            </tr>
+        </thead>
+        <tbody id="outputDip">
+            <tr><td>&nbsp;</td></tr>
+        </tbody>
+    </table>
+    
+    <br><br>
+	<span>
+		<h3 id="dettLabel"></h3>
+		<p id="dettOut"></p>
+	</span>
+
+</body>
+</html>
