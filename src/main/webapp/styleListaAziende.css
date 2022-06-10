@@ -1,0 +1,17 @@
+#titolo {
+    background: #accbe1;
+  }
+
+  #body {
+    background: rgba(83,107,120,0.66);
+  }
+
+  #rettangolo:hover {
+    background-color: #d5e2eb !important;
+    cursor: pointer;
+  }
+
+  .profiloAzienda{
+    background:url(https://cdn.dribbble.com/users/1324317/screenshots/5507387/001_orig_4x.png) center/contain no-repeat;
+    width: "150";
+  }
