@@ -119,7 +119,7 @@ public class ControllerDipendenti extends HttpServlet {
 			else
 				ris.setStatus("1500");
 		}	
-		// comment for test
+		// comment for test 2
 		
 		response.setContentType("application/json");
 		response.getWriter().append(gson.toJson(ris)); 
