@@ -21,14 +21,15 @@ import model.entities.Azienda;
 /**
  * Servlet implementation class ControllerAziende
  */
-@WebServlet({ "/aziende", "/aziende/*" })
+@WebServlet({ "/prototype/aziende", "/prototype/aziende/*" })
+//@WebServlet({ "/aziende", "/aziende/*" })
 public class ControllerAziende extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	private IDaoAziende dao;  
 	private Gson gson;
        
-    /**
+    /** 
      * @see HttpServlet#HttpServlet()
      */
     public ControllerAziende() {
@@ -88,8 +89,8 @@ public class ControllerAziende extends HttpServlet {
 		
 		if(dao.update(az))
 			ris.setStatus("200");
-		else
-			ris.setStatus("1500");
+		else 
+			ris.setStatus("1500"); 
 		
 		response.setContentType("application/json");
 		response.getWriter().append(gson.toJson(ris));

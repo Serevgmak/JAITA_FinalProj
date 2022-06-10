@@ -22,8 +22,9 @@ import model.entities.Ruolo;
 /**
  * Servlet implementation class ControllerRuoli
  */
-@WebServlet({ "/ruoli", "/ruoli/*" })
-public class ControllerRuoli extends HttpServlet {
+@WebServlet({ "/prototype/ruoli", "/prototype/ruoli/*" })
+//@WebServlet({ "/ruoli", "/ruoli/*" })
+public class ControllerRuoli extends HttpServlet { 
 	private static final long serialVersionUID = 1L;
 	
 	private Gson gson;
@@ -38,14 +39,14 @@ public class ControllerRuoli extends HttpServlet {
         gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
     }
 
-    /**
+    /** 
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Response ris = new Response("", null);
 		String path = request.getPathInfo();
 		
-		if(path == null || path.equals("/")) {
+		if(path == null || path.equals("/")) { 
 			ris.setObject(dao.ruoli());
 			if(((List<Ruolo>) ris.getObject()).size() > 0)
 				ris.setStatus("200");

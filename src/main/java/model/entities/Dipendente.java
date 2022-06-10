@@ -1,20 +1,33 @@
 package model.entities;
 
-import java.time.LocalDate;
+//import java.time.LocalDate;
+import java.util.Date;
 
 public class Dipendente {
 
 	int id;
 	String nome;
 	String cognome;
+<<<<<<< HEAD
 	String foto;// modifica aggiunta foto
 	LocalDate ddn;
+=======
+	// foto?
+	//LocalDate ddn;
+	Date ddn;
+>>>>>>> 5e270def22f1de944177a88eadbb6f8c14e723e3
 	double stipendio;
-	LocalDate dda;
+	//LocalDate dda;
+	Date dda;
 	int idRuolo;
 	int idAzienda;
+<<<<<<< HEAD
 	// modifica aggiunta foto
 	public Dipendente(int id, String nome, String cognome, String foto, LocalDate ddn, double stipendio, LocalDate dda, int idRuolo,
+=======
+	
+	public Dipendente(int id, String nome, String cognome, Date ddn, double stipendio, Date dda, int idRuolo,
+>>>>>>> 5e270def22f1de944177a88eadbb6f8c14e723e3
 			int idAzienda) {
 		super();
 		this.id = id;
@@ -64,11 +77,11 @@ public class Dipendente {
 		this.foto = foto;
 	}	
 
-	public LocalDate getDdn() {
+	public Date getDdn() {
 		return ddn;
 	}
 
-	public void setDdn(LocalDate ddn) {
+	public void setDdn(Date ddn) {
 		this.ddn = ddn;
 	}
 
@@ -80,11 +93,11 @@ public class Dipendente {
 		this.stipendio = stipendio;
 	}
 
-	public LocalDate getDda() {
+	public Date getDda() {
 		return dda;
 	}
 
-	public void setDda(LocalDate dda) {
+	public void setDda(Date dda) {
 		this.dda = dda;
 	}
 
