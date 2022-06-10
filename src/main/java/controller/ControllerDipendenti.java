@@ -21,11 +21,12 @@ import model.entities.Dipendente;
 
 /**
  * Servlet implementation class ControllerDipendenti
- */
-@WebServlet({ "/dipendenti", "/dipendenti/*" })
+ */ 
+@WebServlet({ "/prototype/dipendenti", "/prototype/dipendenti/*" })
+//@WebServlet({ "/dipendenti", "/dipendenti/*" })
 public class ControllerDipendenti extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
+	 
 	private Gson gson;
 	private IDaoDipendenti dao;
        
@@ -37,7 +38,7 @@ public class ControllerDipendenti extends HttpServlet {
         dao = DaoFactory.makeD();
         gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
     }
-
+       
     /**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -54,6 +55,12 @@ public class ControllerDipendenti extends HttpServlet {
 			
 		} else if (path.startsWith("/r")){
 			ris.setObject(dao.dipendenteRuolo(Integer.parseInt(path.substring(2))));
+			if(((List<Dipendente>) ris.getObject()).size() > 0)
+				ris.setStatus("200");
+			else
+				ris.setStatus("1500");
+		} else if (path.startsWith("/a")){
+			ris.setObject(dao.dipendenteAzienda(Integer.parseInt(path.substring(2))));
 			if(((List<Dipendente>) ris.getObject()).size() > 0)
 				ris.setStatus("200");
 			else
