@@ -67,6 +67,10 @@ $(document).ready(function(){
             if (res.status == '200') {
                 $('#outputAz').html('');
                 getAziende();
+                $('#dettOut').html('')
+                $('#dettAzDip').html('')
+                $('#dettLabel').html('')
+                $('#dettDipLabel').html('')
             } else {
                 alert('Attenzione qualcosa e andato storto');
             }
@@ -92,6 +96,10 @@ $(document).ready(function(){
             success: function(res){
                 if(res.status == '200'){
                     htmlElement.remove();
+                    $('#dettOut').html('')
+                    $('#dettAzDip').html('')
+                    $('#dettLabel').html('')
+                	$('#dettDipLabel').html('')
                 } else if (res.status == '1500') {
                 	alert('Attenzione qualcosa e andato storto');
                 }        
@@ -132,6 +140,10 @@ $(document).ready(function(){
                     $('#addAz').text('Add');
                     $('#outputAz').html('');
                     getAziende();
+                    $('#dettOut').html('')
+                    $('#dettAzDip').html('')
+                    $('#dettLabel').html('')
+                	$('#dettDipLabel').html('')
                 } else if (res.status == '1500'){
                     alert('Qualcosa e andato storto...');
                 }

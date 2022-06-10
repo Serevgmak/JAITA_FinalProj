@@ -28,7 +28,7 @@ $(document).ready(function(){
             for(const az of res.object){
                 //console.log(categoria);
                 $(`<option data-id="${az.id}" value="${az.id}">${az.ragioneSociale}</option>`).appendTo($('#outAz'));
-           		arrayAziende.push(az.ragioneSociale);
+           		arrayAziende.push([az.id, az.ragioneSociale]);
             }
             //$(`<option selected data-id="-1" value="">tutto</option>`).appendTo($('#outCat'));
 
@@ -213,6 +213,8 @@ $(document).ready(function(){
             if (res.status == '200') {
                 $('#outputDip').html('');
                 getDipendenti();
+                $('#dettOut').html('');
+                $('#dettLabel').html('')
             } else {
                 alert('Attenzione qualcosa e andato storto');
             }
@@ -238,6 +240,8 @@ $(document).ready(function(){
             success: function(res){
                 if(res.status == '200'){
                     htmlElement.remove();
+                    $('#dettOut').html('')
+                    $('#dettLabel').html('')
                 } else if (res.status == '1500') {
                 	alert('Attenzione qualcosa e andato storto');
                 }        
@@ -282,6 +286,8 @@ $(document).ready(function(){
                     $('#addDip').text('Add');
                     $('#outputDip').html('');
                     getDipendenti();
+                    $('#dettOut').html('');
+                    $('#dettLabel').html('')
                 } else if (res.status == '1500'){
                     alert('Qualcosa e andato storto...');
                 }
@@ -298,6 +304,15 @@ $(document).ready(function(){
 
     function inspectDip(id){
         $.get(`dipendenti/${id}`, function(res){
+			let azienda = ""
+			for(let i = 0; i < arrayAziende.length; i++){
+				if(res.object.idAzienda == arrayAziende[i][0]){
+					azienda = arrayAziende[i][1]; 
+				}
+			}
+			if (azienda == ""){
+				azienda = "disponibile";
+			}
             $('#dettLabel').text('Dettaglio')
             $('#dettOut').html(`<p>Nome: ${res.object.nome}</p>
                                 <p>Cognome: ${res.object.cognome}</p>
@@ -305,7 +320,7 @@ $(document).ready(function(){
                                 <p>Stipendio: ${res.object.stipendio}</p>
                                 <p>Data di assunzione: ${res.object.dda}</p>
                                 <p>Ruolo: ${arrayRuoli[res.object.idRuolo - 1]}</p>
-                                <p>Azienda: ${arrayAziende[res.object.idAzienda - 1]}</p>`);
+                                <p>Azienda: ${azienda}</p>`);
         }) 
     }
     
