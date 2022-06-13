@@ -3,6 +3,14 @@ $(document).ready(function () {
 	var editId = 0;
 	var deleteId = 0;
 	var editMode = false;
+	const editAz = {
+				id: -1,
+                ragioneSociale: "", 
+                pIva: 0, 
+                indirizzo: "", 
+                mail: "", 
+                telefono: 0, 
+        };
 
 
 
@@ -79,6 +87,12 @@ $(document).ready(function () {
             $("#dettaglioIndirizzo").append(res.object.indirizzo);
             deleteId = res.object.id;
             editId = res.object.id;
+            editAz.id = res.object.id;
+            editAz.ragioneSociale = res.object.ragioneSociale;
+            editAz.pIva = res.object.pIva;
+            editAz.indirizzo = res.object.indirizzo;
+            editAz.mail = res.object.mail;
+            editAz.telefono = res.object.telefono;
         })
 		//getAziende();
     }
@@ -132,9 +146,6 @@ $(document).ready(function () {
 
         if(!editMode){
             addAzienda(az);
-        } else {
-            az.id = editId;
-            modificaAzienda(az);
         }
         
         $('#ragioneSocialeAz').val(''); 
@@ -163,6 +174,78 @@ $(document).ready(function () {
 
         });
     }
+    
+    
+    
+    
+    /*function modificaAzienda(az) {
+        $.ajax({
+            url: 'aziende',
+            type: 'PUT',
+            data: JSON.stringify(az),
+            success: function(res){
+                if (res.status == '200'){
+                    editId = -1;
+                    editMode = false;
+                    $('#addAz').text('Add');
+                    $('#outputAz').html('');
+                    getAziende();
+                    $('#dettOut').html('')
+                    $('#dettAzDip').html('')
+                    $('#dettLabel').html('')
+                	$('#dettDipLabel').html('')
+                } else if (res.status == '1500'){
+                    alert('Qualcosa e andato storto...');
+                }
+            }
+        })
+    }*/
+    
+    
+    
+    
+    
+    $("#modificaAzienda").on("click", function () {
+        console.log("ciao");
+        //$.get(`aziende/${editId}`, function (res) {
+        $('#modal-dettaglioAzienda').modal('hide');
+        $('#modal-modificaAzienda').modal('show');
+        $("#inputRagioneSociale").val(editAz.ragioneSociale);
+        $("#inputMail").val(editAz.mail);
+        $("#inputTelefono").val(editAz.telefono);
+        $("#inputPartitaIVA").val(editAz.pIva);
+        $("#inputIndirizzo").val(editAz.indirizzo);
+
+        /* salvataggio dati modifica*/
+        $("#salvaModificaAzienda").on("click", function () {
+            editAz.ragioneSociale = $("#inputRagioneSociale").val();
+            editAz.mail = $("#inputMail").val();
+            editAz.telefono = $("#inputTelefono").val();
+            editAz.pIva = $("#inputPartitaIVA").val();
+            editAz.indirizzo = $("#inputIndirizzo").val();
+            
+            $.ajax({
+            url: 'aziende',
+            type: 'PUT',
+            data: JSON.stringify(editAz),
+            success: function(res){
+                if (res.status == '200'){
+                    //editId = -1;
+                    editMode = false;
+                    $('#outputAz').html('');
+                    getAziende();
+                    inspectAz(editId);
+                } else if (res.status == '1500'){
+                    alert('Qualcosa e andato storto...');
+                }
+            }})
+            
+            
+            
+            $('#modal-modificaAzienda').modal('hide');
+            $('#modal-dettaglioAzienda').modal('show');
+        });
+    });
     
     
     

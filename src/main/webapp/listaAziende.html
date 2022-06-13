@@ -14,7 +14,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src="jquery-3.6.0.min.js"></script>
     <script src="mainAziende.js"></script>
-    <style>#body { overflow-y: scroll; }</style>
+    <style>#body { overflow-y: auto; }</style>
     
 </head>
 
@@ -342,7 +342,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">LISTA PERSONALE</h4><button class="btn-close" type="button"
-                        data-bs-dismiss="modal" aria-label="Close"></button>
+                        data-bs-dismiss="modal" data-bs-toggle="modal" href="#modal-dettaglioAzienda" aria-label="Close"></button>
                 </div>
                 <div class="modal-body" id="listaCompletaDipendenti">
                     <!-- Lista personale -->
