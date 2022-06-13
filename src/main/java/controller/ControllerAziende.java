@@ -21,8 +21,8 @@ import model.entities.Azienda;
 /**
  * Servlet implementation class ControllerAziende
  */
-@WebServlet({ "/prototype/aziende", "/prototype/aziende/*" })
-//@WebServlet({ "/aziende", "/aziende/*" })
+//@WebServlet({ "/prototype/aziende", "/prototype/aziende/*" })
+@WebServlet({ "/aziende", "/aziende/*" })
 public class ControllerAziende extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
@@ -37,7 +37,7 @@ public class ControllerAziende extends HttpServlet {
         dao = DaoFactory.makeA();
         gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
     }
-
+         
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -57,7 +57,7 @@ public class ControllerAziende extends HttpServlet {
 		}
 		
 		
-		
+		    
 		response.setContentType("application/json");
 		response.getWriter().append(gson.toJson(ris));
 	}

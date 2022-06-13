@@ -22,8 +22,8 @@ import model.entities.Dipendente;
 /**
  * Servlet implementation class ControllerDipendenti
  */ 
-@WebServlet({ "/prototype/dipendenti", "/prototype/dipendenti/*" })
-//@WebServlet({ "/dipendenti", "/dipendenti/*" })
+//@WebServlet({ "/prototype/dipendenti", "/prototype/dipendenti/*" })
+@WebServlet({ "/dipendenti", "/dipendenti/*" })
 public class ControllerDipendenti extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	 
@@ -120,7 +120,7 @@ public class ControllerDipendenti extends HttpServlet {
 				ris.setStatus("1500");
 		}	
 		// comment for test 2
-		
+		  
 		response.setContentType("application/json");
 		response.getWriter().append(gson.toJson(ris)); 
 	}

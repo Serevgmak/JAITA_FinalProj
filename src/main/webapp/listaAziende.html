@@ -13,7 +13,9 @@
     <!-- link per icone -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src="jquery-3.6.0.min.js"></script>
-    <script src="main.js"></script>
+    <script src="mainAziende.js"></script>
+    <style>#body { overflow-y: scroll; }</style>
+    
 </head>
 
 <body>
@@ -49,26 +51,8 @@
                 </div>
                 <div class="row" id="body"
                     style="margin-right: 0px;margin-left: 120px;margin-top: 20px;height: 129vh;width: 80%;">
-                    <div class="col" style="margin: 20px;">
-                        <div style="height: 15vh;width: 100%;margin-top: 20px;text-align: center; " class="listaAziende">
-                            <div class="row" id="rettangolo"
-                                style="margin-right: 0px;margin-left: 0px;height: 15vh;background: #accbe1;margin-top: 20px;margin-bottom: 5px;"
-                                data-bs-toggle="modal" data-bs-target="#modal-dettaglioAzienda">
-
-                                <!-- Qui inserire immagine azienda -->
-                                <div class="col-xl-3 profiloAzienda d-flex flex-column align-items-center text-center"
-                                    style="height: 85%;margin-top: 1vh;margin-left: 1vh;">
-                                    <!-- <img
-                                        class="img-fluid profiloAzienda" style="width: 70%;" src="https://cdn.dribbble.com/users/1324317/screenshots/5507387/001_orig_4x.png"> -->
-                                </div>
-                                <div class="col d-xl-flex justify-content-xl-start align-items-xl-center"
-                                    style="height: 12vh;margin-top: 10px;padding-right: 12px;padding-left: 0px;">
-                                    <p  class="fs-4 nomeAziendaLista"
-                                        style="font-family: 'Source Code Pro', monospace;font-style: italic;margin-left: 40px;margin-right: 110px;">
-                                        PINCO PALLINO SPA</p>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="col" style="margin: 20px;" id="outputAz">
+                        
                     </div>
                 </div>
             </div>
@@ -100,51 +84,9 @@
                                         </div>
                                     </div>
                                     <div class="card mt-3">
-                                        <ul class="list-group list-group-flush">
-                                            <li
-                                                class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                                <h5>PERSONALE INSERITO</h5>
-                                            </li>
-                                            <li
-                                                class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                                <h6>Marco Momo</h6>
-                                            </li>
-                                            <li
-                                                class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                                <h6>Silvia Rondinelli</h6>
-                                            </li>
-                                            <li
-                                                class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                                <h6>Dario Comino</h6>
-                                            </li>
-                                            <li
-                                            class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                            <h6>Leonardo Paglia</h6>
-                                        </li>
-                                        <li
-                                        class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                        <h6>Sergei Makarov</h6>
-                                    </li>
-                                    <li
-                                    class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                    <h6>Marco Momo</h6>
-                                </li>
-                                <li
-                                    class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                    <h6>Silvia Rondinelli</h6>
-                                </li>
-                                <li
-                                    class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                    <h6>Dario Comino</h6>
-                                </li>
-                                <li
-                                class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                <h6>Leonardo Paglia</h6>
-                            </li>
-                            <li
-                            class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                            <h6>Sergei Makarov</h6>
-                        </li>
+                                        <ul class="list-group list-group-flush" id="outputDip">
+                                            
+                                            
                                         </ul>
                                     </div>
                                 </div>
@@ -220,7 +162,7 @@
                     </div>
                 </div>
                 <div class="modal-footer"><a id="modificaAzienda" class="btn btn-info " target="__blank">Modifica</a>
-                    <a class="btn btn-info " target="__blank">Elimina</a>
+                    <a class="btn btn-info btnDeleteAz" target="__blank" data-bs-dismiss="modal">Elimina</a>
                 </div>
             </div>
         </div>
@@ -257,35 +199,35 @@
                                         <div class="row">
                                             <div class="input-group">
                                                 <span class="input-group-text">Ragione Sociale</span>
-                                                <input type="text" aria-label="RagioneSociale" class="form-control">
+                                                <input type="text" aria-label="RagioneSociale" class="form-control" id="ragioneSocialeAz">
                                             </div>
                                         </div>
                                         <hr>
                                         <div class="row">
                                             <div class="input-group">
                                                 <span class="input-group-text">Email aziendale</span>
-                                                <input type="mail" aria-label="Email" class="form-control">
+                                                <input type="mail" aria-label="Email" class="form-control" id="mailAz">
                                             </div>
                                         </div>
                                         <hr>
                                         <div class="row">
                                             <div class="input-group">
                                                 <span class="input-group-text">Telefono</span>
-                                                <input type="number" aria-label="Telefono" class="form-control">
+                                                <input type="number" aria-label="Telefono" class="form-control" id="telefonoAz">
                                             </div>
                                         </div>
                                         <hr>
                                         <div class="row">
                                             <div class="input-group">
                                                 <span class="input-group-text">Partita IVA</span>
-                                                <input type="text" aria-label="partitaIva" class="form-control">
+                                                <input type="text" aria-label="partitaIva" class="form-control" id="pIvaAz">
                                             </div>
                                         </div>
                                         <hr>
                                         <div class="row">
                                             <div class="input-group">
                                                 <span class="input-group-text">Indirizzo</span>
-                                                <input type="text" aria-label="Indirizzo" class="form-control">
+                                                <input type="text" aria-label="Indirizzo" class="form-control" id="indirizzoAz">
                                             </div>
                                         </div>
                                         <hr>
@@ -298,7 +240,7 @@
                     </div>
                 </div>
                 <!-- Card pulsanti elimina e modifica -->
-                <div class="modal-footer"> <a class="btn btn-info " target="__blank">Salva</a>
+                <div class="modal-footer"> <a class="btn btn-info " target="__blank" id="addBtn" data-bs-dismiss="modal">Salva</a>
                 </div>
 
             </div>
@@ -387,13 +329,29 @@
                     </div>
                 </div>
                 <!-- Card pulsanti elimina e modifica -->
-                <div id="salvaModificaAzienda" class="modal-footer"> <a class="btn btn-info " target="__blank">Salva</a>
+                <div id="salvaModificaAzienda" class="modal-footer"> <a class="btn btn-info " target="__blank" >Salva</a>
                 </div>
 
             </div>
         </div>
     </div>
     <!-- Fine modale aggiunta azienda -->
+     <!-- modale lista dipendenti dettaglio azienda -->
+    <div id="listaPiccola" class="modal fade" role="dialog" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">LISTA PERSONALE</h4><button class="btn-close" type="button"
+                        data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="listaCompletaDipendenti">
+                    <!-- Lista personale -->
+                    
+
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>

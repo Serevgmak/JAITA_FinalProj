@@ -22,8 +22,8 @@ import model.entities.Ruolo;
 /**
  * Servlet implementation class ControllerRuoli
  */
-@WebServlet({ "/prototype/ruoli", "/prototype/ruoli/*" })
-//@WebServlet({ "/ruoli", "/ruoli/*" })
+//@WebServlet({ "/prototype/ruoli", "/prototype/ruoli/*" })
+@WebServlet({ "/ruoli", "/ruoli/*" })
 public class ControllerRuoli extends HttpServlet { 
 	private static final long serialVersionUID = 1L;
 	
