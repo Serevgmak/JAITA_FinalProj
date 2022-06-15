@@ -1,0 +1,438 @@
+<!-- Lista dipendenti funzionante con modale dettaglio -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>LISTA DIPENDENTI</title>
+    <!-- import bootstrap 5.1.3 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+    <!-- link per il font -->
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,600,800,800i,900,900i&amp;display=swap">
+    <!-- link per icone -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="styleListaDipendenti.css">
+    <script src="jquery-3.6.0.min.js"></script>
+    <script src="main.js"></script>
+</head>
+
+<body>
+    <!-- container della pagina che contiene una riga divisa per colonne-->
+    <div class="container-fluid" style="width: 100%;height: 150vh;background: url(sfondo\ filtro.jpg) center;">
+        <div class="row" style="height: 150vh;">
+            <!-- prima colonna verticale, colonna home e navbar-->
+            <div class="col-md-4 col-xl-2" style="background: #536b78;">
+                <!-- prima colonna logo con index.html -->
+                <div class="row" style="margin-top: 22px;text-align: center;">
+                    <a href="index.html" class="linkToHome">
+                        <div class="col"><img style="width: 170px;" src="logo.png"></div>
+                    </a>
+                </div>
+                <!-- prima colonna, button aggiungi -->
+                <div class="row text-center" style="margin-top: 54px;">
+                    <div class="col"><button class="btn btn-primary" id="bottoneAggiungi" type="button"
+                            data-bs-target="#modal-aggiunta" data-bs-toggle="modal"
+                            style="width: 120px;background: #535978;">Aggiungi</button></div>
+                </div>
+            </div>
+            <!-- seconda colonna -->
+            <div class="col-md-4 col-xl-8">
+                <!-- prima riga con titolo -->
+                <div class="row" style="margin-top: 12px;margin-right: 0px;margin-left: 0px;">
+                    <div class="col" style="margin-top: 12px;">
+                        <h1 id="titolo"
+                            style="font-family: 'Source Code Pro', monospace;font-weight: bold;text-align: center;margin-top: 0px;font-size: 46px;height: 30px;">
+                            LISTA</h1>
+                    </div>
+                </div>
+                <!-- seconda riga sottotitolo -->
+                <div class="row" style="margin-right: 0px;margin-left: 0px;margin-top: 0px;">
+                    <div class="col">
+                        <h2 class="text-center"
+                            style="font-family: 'Source Code Pro', monospace;margin-top: 20px;font-style: italic;background: rgba(83,107,120,0.66);">
+                            <span style="text-decoration: underline;">Personale</span>
+                        </h2>
+                    </div>
+                </div>
+                <!-- terza riga lista-->
+                <div class="row" id="body"
+                    style="margin-right: 0px;margin-left: 120px;margin-top: 20px;height: 129vh;width: 80%;">
+                    <div class="col" style="margin: 20px;">
+                        <div style="height: 15vh;width: 100%;margin-top: 20px;text-align: center;">
+                            <!-- terza riga 2, rettangolo con dettagli, suddiviso in due colonne-->
+                            <div class="row" id="rettangolo"
+                                style="margin-right: 0px;margin-left: 0px;height: 15vh;background: #accbe1; margin-top: 20px;margin-bottom: 5px;"
+                                data-bs-toggle="modal" data-bs-target="#modal-1">
+
+                                <!-- colonna foto profilo-->
+                                <div class="col-xl-3 profiloDipendente"
+                                    style="height: 85%;margin-top: 1vh;margin-left: 1vh;  ">
+                                </div>
+                                <!-- colonna dati dipendente-->
+                                <div class="col d-xl-flex justify-content-xl-start align-items-xl-center"
+                                    style="height: 12vh;margin-top: 10px;padding-right: 12px;padding-left: 0px;">
+                                    <p class="fs-4"
+                                        style="font-family: 'Source Code Pro', monospace;font-style: italic;margin-left: 40px;margin-right: 110px;">
+                                        MARIO ROSSI</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- terza colonna del container -->
+            <div class="col-md-4 col-xl-2" style="background: #536b78;"></div>
+        </div>
+    </div>
+    <!-- Inizio modale  dipendenti -->
+    <div class="modal fade" role="dialog" tabindex="-1" id="modal-1">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">CARD PERSONALE</h4><button type="button" class="btn-close"
+                        data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="main-body">
+                        <!-- Card Parte principale con immagine -->
+                        <div class="row gutters-sm">
+                            <div class="col-md-6 mb-3">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="d-flex flex-column align-items-center text-center">
+                                            <img src="fotoACaso.jpg" alt="Admin" class="rounded-circle" width="150">
+                                            <div class="mt-3">
+                                                <h4>Mario Rossi</h4>
+                                                <p class="text-secondary mb-1">Full Stack Developer</p>
+                                                <p class="text-muted font-size-sm">Pinco Pallino SPA</p>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Card Dettagli dipendente -->
+                                <div class="card mt-8">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-sm-5">
+                                                <h6 class="mb-0">Nome e Cognome</h6>
+                                            </div>
+                                            <div class="col-sm-6 text-secondary">
+                                                Mario Rossi
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-sm-5">
+                                                <h6 class="mb-0">Data di Nascita</h6>
+                                            </div>
+                                            <div class="col-sm-6 text-secondary">
+                                                01-01-1991
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-sm-5">
+                                                <h6 class="mb-0">Stipendio</h6>
+                                            </div>
+                                            <div class="col-sm-6 text-secondary">
+                                                1880.00€
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-sm-5">
+                                                <h6 class="mb-0">Data di Assunzione</h6>
+                                            </div>
+                                            <div class="col-sm-6 text-secondary">
+                                                17-06-2022
+                                            </div>
+                                        </div>
+                                        <hr>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Dettagli azienda -->
+                            <div class="col-md-6">
+                                <h3>AZIENDA DI RIFERIMENTO</h3>
+                                <div class="card mb-3">
+
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-sm-5">
+                                                <h6 class="mb-0">Ragione Sociale</h6>
+                                            </div>
+                                            <div class="col-sm-6 text-secondary">
+                                                Pinco Pallino SPA
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-sm-5">
+                                                <h6 class="mb-0">Email</h6>
+                                            </div>
+                                            <div class="col-sm-6 text-secondary">
+                                                pincopallino@pincopallino.it
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-sm-5">
+                                                <h6 class="mb-0">Partita IVA</h6>
+                                            </div>
+                                            <div class="col-sm-6 text-secondary">
+                                                5t68756785876568
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-sm-5">
+                                                <h6 class="mb-0">Numero di telefono</h6>
+                                            </div>
+                                            <div class="col-sm-6 text-secondary">
+                                                534535435
+                                            </div>
+                                        </div>
+
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-sm-5">
+                                                <h6 class="mb-0">Indirizzo</h6>
+                                            </div>
+                                            <div class="col-sm-6 text-secondary">
+                                                Via tal dei tali 12, Milano, MI
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="row">
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+                <!-- Card pulsanti elimina e modifica -->
+                <div class="modal-footer"> <a id="modificaDipendente" class="btn btn-info " target="__blank">Modifica</a>
+                    <a class="btn btn-info " target="__blank">Elimina</a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- Fine modale -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+
+    <!-- Inzio aggiunta dipendente-->
+    <div class="modal fade" role="dialog" tabindex="-1" id="modal-aggiunta">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="titoloModifica">AGGIUNGI PERSONALE</h4><button type="button" class="btn-close"
+                        data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="main-body">
+                        <!-- Card Parte principale con immagine -->
+                        <div class="row gutters-sm">
+                            <div class="col-md-12  mb-3">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="d-flex flex-column align-items-center text-center">
+
+                                            <div class="mb-3">
+                                                <label for="formFileSm" class="form-label">Scegli la foto</label>
+                                                <input class="form-control form-control-sm" id="formFileSm" type="file">
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Card Dettagli dipendente -->
+                                <div class="card mt-12">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="input-group">
+                                                <span class="input-group-text">Nome e cognome</span>
+                                                <input type="text" aria-label="First name" class="form-control">
+                                                <input type="text" aria-label="Last name" class="form-control">
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="input-group">
+                                                <span class="input-group-text">Data di nascita</span>
+                                                <input type="date" aria-label="Date" class="form-control">
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="input-group">
+                                                <span class="input-group-text">Stipendio</span>
+                                                <input type="number" aria-label="stipendio" class="form-control">
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="input-group">
+                                                <span class="input-group-text">Data di assunzione</span>
+                                                <input type="date" aria-label="Date" class="form-control">
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="input-group">
+                                                <span class="input-group-text">Ruolo</span>
+                                                <input type="text" aria-label="Date" class="form-control">
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <select class="form-select form-select-sm" aria-label=".form-select-sm example">
+                                            <option selected>Scegli azienda di riferimento</option>
+                                            <option value="1">One</option>
+                                            <option value="2">Two</option>
+                                            <option value="3">Three</option>
+                                        </select>
+                                        <hr>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+                <!-- Card pulsanti elimina e modifica -->
+                <div class="modal-footer"> <a class="btn btn-info " target="__blank">Salva</a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- Fine modale -->
+    <div class="row">
+        <div class="input-group">
+            <span class="input-group-text">Stipendio</span>
+            <input type="number" aria-label="Stipendio" class="form-control">
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+    <!-- Inzio modifica dipendente-->
+    <div class="modal fade" role="dialog" tabindex="-1" id="modal-modificaDipendente">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">MODIFICA PERSONALE</h4><button type="button" class="btn-close"
+                        data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="main-body">
+                        <!-- Card Parte principale con immagine -->
+                        <div class="row gutters-sm">
+                            <div class="col-md-12  mb-3">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="d-flex flex-column align-items-center text-center">
+
+                                            <div class="mb-3">
+                                                <label for="formFileSm" class="form-label">Scegli la foto</label>
+                                                <input class="form-control form-control-sm" id="formFileSm" type="file">
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Card Dettagli dipendente -->
+                                <div class="card mt-12">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="input-group">
+                                                <span class="input-group-text">Nome e cognome</span>
+                                                <input id="inputNome" type="text" aria-label="First name" class="form-control"
+                                                    value="">
+                                                <input id="inputCognome" type="text" aria-label="Last name" class="form-control">
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class=" row">
+                                                <div class="input-group">
+                                                    <span class="input-group-text">Data di nascita</span>
+                                                    <input id="inputDdn" type="date" aria-label="Date" class="form-control">
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <div class="row">
+                                                <div class="input-group">
+                                                    <span class="input-group-text">Stipendio</span>
+                                                    <input id="inputStipendio" type="number" aria-label="stipendio" class="form-control">
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <div class="row">
+                                                <div class="input-group">
+                                                    <span class="input-group-text">Data di assunzione</span>
+                                                    <input id="inputDdassunzione" type="date" aria-label="Date" class="form-control">
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <div class="row">
+                                                <div class="input-group">
+                                                    <span class="input-group-text">Ruolo</span>
+                                                    <input id="inputRuolo" type="text" aria-label="Date" class="form-control">
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <select id="inputSceltaAzienda" class="form-select form-select-sm"
+                                                aria-label=".form-select-sm example">
+                                                <option selected>Scegli azienda di riferimento</option>
+                                                <option value="1">One</option>
+                                                <option value="2">Two</option>
+                                                <option value="3">Three</option>
+                                            </select>
+                                            <hr>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Card pulsanti elimina e modifica -->
+                    <div class="modal-footer"> <a class="btn btn-info " target="__blank">Salva</a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- Fine modale -->
+        <div class="row">
+            <div class="input-group">
+                <span class="input-group-text">Stipendio</span>
+                <input type="number" aria-label="Stipendio" class="form-control">
+            </div>
+        </div>
+
+
+
+
+
+
+</body>
+
+</html>

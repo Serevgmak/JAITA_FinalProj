@@ -85,7 +85,7 @@ public class ControllerDipendenti extends HttpServlet {
 		if(dao.add(dip)) {
 			ris.setStatus("200");
 		} else {
-			ris.setStatus("1500");
+			ris.setStatus("1500"); 
 		}
 		
 		response.setContentType("application/json");
@@ -118,7 +118,8 @@ public class ControllerDipendenti extends HttpServlet {
 				ris.setStatus("200");
 			else
 				ris.setStatus("1500");
-		}		
+		}	
+		// comment for test
 		
 		response.setContentType("application/json");
 		response.getWriter().append(gson.toJson(ris)); 
