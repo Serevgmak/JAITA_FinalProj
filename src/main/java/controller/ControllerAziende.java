@@ -54,7 +54,7 @@ public class ControllerAziende extends HttpServlet {
         estensioni = new HashMap<Integer, String>();
         estensioni.put(0, "jpg");
         estensioni.put(1, "jpg");
-        estensioni.put(2, "png");
+        estensioni.put(2, "jpg");
         estensioni.put(3, "png");
     }
          
@@ -94,29 +94,29 @@ public class ControllerAziende extends HttpServlet {
 		az = gson.fromJson(IOUtils.toString(jsonPart.getInputStream(), StandardCharsets.UTF_8), Azienda.class);
 		
 		
-		int addId = dao.getNextId();
-		Part imgPart = request.getPart("image");
-		if(imgPart.getSubmittedFileName() != null) {
-			estensioni.put(addId, imgPart.getSubmittedFileName().split("[.]")[1]); 
-			imgPart.write("C:\\Users\\m3107\\eclipse-workspace\\JAITA58\\10-Settimana\\NoPlay_RestfulProj_v1.0\\src\\main\\webapp\\images\\a"
-								+ addId
-								+ "."
-								+ estensioni.get(addId));
-		} else {
-			estensioni.put(addId, "jpg");
-			// Facciamo copy dell'immagine di default
-			String source = "C:\\Users\\m3107\\eclipse-workspace\\JAITA58\\10-Settimana\\NoPlay_RestfulProj_v1.0\\src\\main\\webapp\\images\\a0.jpg";
-			String dest = "C:\\Users\\m3107\\eclipse-workspace\\JAITA58\\10-Settimana\\NoPlay_RestfulProj_v1.0\\src\\main\\webapp\\images\\a"
-								+ addId
-								+ "."
-								+ estensioni.get(0);
-			FileUtils.copyFile(new File(source), new File(dest));
-		}
 		
 		
 		
 		
 		if(dao.add(az)) {
+			int addId = dao.getNextId() - 1;
+			Part imgPart = request.getPart("image");
+			if(imgPart.getSubmittedFileName() != null) {
+				estensioni.put(addId, imgPart.getSubmittedFileName().split("[.]")[1]); 
+				imgPart.write("C:\\Users\\m3107\\eclipse-workspace\\JAITA58\\10-Settimana\\NoPlay_RestfulProj_v1.0\\src\\main\\webapp\\images\\a"
+						+ addId
+						+ "."
+						+ estensioni.get(addId)); 
+			} else {
+				estensioni.put(addId, "jpg");
+				// Facciamo copy dell'immagine di default
+				String source = "C:\\Users\\m3107\\eclipse-workspace\\JAITA58\\10-Settimana\\NoPlay_RestfulProj_v1.0\\src\\main\\webapp\\images\\a0.jpg";
+				String dest = "C:\\Users\\m3107\\eclipse-workspace\\JAITA58\\10-Settimana\\NoPlay_RestfulProj_v1.0\\src\\main\\webapp\\images\\a"
+						+ addId
+						+ "."
+						+ estensioni.get(addId);
+				FileUtils.copyFile(new File(source), new File(dest));
+			}
 			ris.setStatus("200");
 			ris.setEstensioni(estensioni);
 		} else {
@@ -139,15 +139,19 @@ public class ControllerAziende extends HttpServlet {
 		 
 		
 		Part imgPart = request.getPart("image");
-		if(imgPart != null) { 
-			estensioni.replace(az.getId(), imgPart.getSubmittedFileName().split("[.]")[1]);
-			// TODO DELETE IMG
-		}
-		imgPart.write("C:\\Users\\m3107\\eclipse-workspace\\JAITA58\\10-Settimana\\NoPlay_RestfulProj_v1.0\\src\\main\\webapp\\images\\a" 
-							+ az.getId() 
+		if(imgPart.getSubmittedFileName() != null) {
+			String source = "C:\\Users\\m3107\\eclipse-workspace\\JAITA58\\10-Settimana\\NoPlay_RestfulProj_v1.0\\src\\main\\webapp\\images\\a"
+							+ az.getId()
 							+ "."
-							+ estensioni.get(az.getId()));
-				 
+							+ estensioni.get(az.getId());
+			File img = new File(source);
+			img.delete();
+			estensioni.replace(az.getId(), imgPart.getSubmittedFileName().split("[.]")[1]);
+			imgPart.write("C:\\Users\\m3107\\eclipse-workspace\\JAITA58\\10-Settimana\\NoPlay_RestfulProj_v1.0\\src\\main\\webapp\\images\\a" 
+					+ az.getId() 
+					+ "."
+					+ estensioni.get(az.getId()));
+		}				 
 		
 		if(dao.update(az)) {
 			ris.setStatus("200"); 
@@ -163,16 +167,23 @@ public class ControllerAziende extends HttpServlet {
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String path = request.getPathInfo();
-		Response ris = new Response("", null, estensioni);
+		Response ris = new Response("", null, null);
 		
 
 		if(path == null || path.equals("/")) {
 			ris.setStatus("1500");			
 		} else {
 			int id = Integer.parseInt(path.substring(1));
-			if(dao.delete(id))
-				ris.setStatus("200");    
-			else
+			if(dao.delete(id)) {
+				String source = "C:\\Users\\m3107\\eclipse-workspace\\JAITA58\\10-Settimana\\NoPlay_RestfulProj_v1.0\\src\\main\\webapp\\images\\a"
+						+ id
+						+ "."
+						+ estensioni.get(id);
+				File img = new File(source);
+				img.delete();
+				estensioni.remove(id);
+				ris.setStatus("200");
+			} else
 				ris.setStatus("1500");
 		}		
 		

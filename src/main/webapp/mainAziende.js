@@ -1,6 +1,7 @@
 $(document).ready(function () {
 
 	var editId = 0;
+	var editEst = "";
 	var deleteId = 0;
 	var editMode = false;
 	const editAz = {
@@ -139,6 +140,7 @@ function getAziende(){
             $("#dettaglioIndirizzo").append(res.object.indirizzo);
             deleteId = res.object.id;
             editId = res.object.id;
+            editEst = estensioni.get("" + editId);
             editAz.id = res.object.id;
             editAz.ragioneSociale = res.object.ragioneSociale;
             editAz.pIva = res.object.pIva;
@@ -242,11 +244,11 @@ function getAziende(){
             contentType : false,
             //data: formData,
             success: function(res){
+            		location.reload(true);
                     $('#outputAz').html('');
                 	getAziende();
                 }
             })
-            location.reload(true);
     }
     
     
@@ -283,10 +285,11 @@ function getAziende(){
         //console.log("ciao");
         //$.get(`aziende/${editId}`, function (res) {
 	
-		$('#imgUpdAz').html('');
+		
+            $('#imgUpdAz').html('');
             $(`<img
                 class="rounded-circle"
-                src="./images/a${editId}.jpg"
+                src="./images/a${editId}.${editEst}"
                 alt="LogoAzienda" width="150" />`).appendTo($('#imgUpdAz'));
                 
         $('#modal-dettaglioAzienda').modal('hide');
