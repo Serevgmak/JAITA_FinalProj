@@ -2,7 +2,9 @@ package controller;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,7 +18,6 @@ import com.google.gson.GsonBuilder;
 import model.Response;
 import model.dao.DaoFactory;
 import model.dao.idao.IDaoDipendenti;
-import model.entities.Azienda;
 import model.entities.Dipendente;
 
 /**
@@ -28,22 +29,34 @@ public class ControllerDipendenti extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	 
 	private Gson gson;
-	private IDaoDipendenti dao;
+	private IDaoDipendenti dao;  
+	private Map<Integer, String> estensioni;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ControllerDipendenti() {
-        super();
-        dao = DaoFactory.makeD();
+    public ControllerDipendenti() {  
+        super();  
+        dao = DaoFactory.makeD(); 
         gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+        estensioni = new HashMap<Integer, String>();
+        estensioni.put(0, "jpg");
+        estensioni.put(1, "jpg");
+        estensioni.put(2, "jpg");
+        estensioni.put(3, "jpg");
+        estensioni.put(4, "jpg");
+        estensioni.put(5, "jpg");
+        estensioni.put(6, "jpg");
+        estensioni.put(7, "jpg");
+        estensioni.put(8, "jpg");
+        estensioni.put(9, "jpg");
     }
        
     /**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Response ris = new Response("", null);
+		Response ris = new Response("", null, this.estensioni);
 		String path = request.getPathInfo();
 		
 		if(path == null || path.equals("/")) {
@@ -51,7 +64,7 @@ public class ControllerDipendenti extends HttpServlet {
 			if(((List<Dipendente>) ris.getObject()).size() > 0)
 				ris.setStatus("200");
 			else
-				ris.setStatus("1500");
+				ris.setStatus("1500"); 
 			
 		} else if (path.startsWith("/r")){
 			ris.setObject(dao.dipendenteRuolo(Integer.parseInt(path.substring(2))));
@@ -80,7 +93,7 @@ public class ControllerDipendenti extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		Dipendente dip = dipendenteFromRequest(request);
-		Response ris = new Response("", null);
+		Response ris = new Response("", null, this.estensioni);
 		
 		if(dao.add(dip)) {
 			ris.setStatus("200");
@@ -94,12 +107,12 @@ public class ControllerDipendenti extends HttpServlet {
 	
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Dipendente dip = dipendenteFromRequest(request);
-		Response ris = new Response("", null);
+		Response ris = new Response("", null, this.estensioni);
 		
 		if(dao.update(dip))
-			ris.setStatus("200");
+			ris.setStatus("200"); 
 		else
-			ris.setStatus("1500");
+			ris.setStatus("1500"); 
 		
 		response.setContentType("application/json");
 		response.getWriter().append(gson.toJson(ris));
@@ -107,7 +120,7 @@ public class ControllerDipendenti extends HttpServlet {
 	
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String path = request.getPathInfo();
-		Response ris = new Response("", null);
+		Response ris = new Response("", null, this.estensioni);
 		
 
 		if(path == null || path.equals("/")) {

@@ -43,7 +43,7 @@ public class ControllerRuoli extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Response ris = new Response("", null);
+		Response ris = new Response("", null, null);
 		String path = request.getPathInfo();
 		
 		if(path == null || path.equals("/")) { 
@@ -69,7 +69,7 @@ public class ControllerRuoli extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		Ruolo r = ruoloFromRequest(request);
-		Response ris = new Response("", null);
+		Response ris = new Response("", null, null);
 		
 		if(dao.add(r)) {
 			ris.setStatus("200");
@@ -84,7 +84,7 @@ public class ControllerRuoli extends HttpServlet {
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		Ruolo r = ruoloFromRequest(request);
-		Response ris = new Response("", null);
+		Response ris = new Response("", null, null);
 		
 		if(dao.update(r))
 			ris.setStatus("200");
@@ -98,7 +98,7 @@ public class ControllerRuoli extends HttpServlet {
 	
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String path = request.getPathInfo();
-		Response ris = new Response("", null);
+		Response ris = new Response("", null, null);
 		
 
 		if(path == null || path.equals("/")) {

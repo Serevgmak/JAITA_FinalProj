@@ -16,4 +16,6 @@ public interface IDaoAziende{
 	
 	boolean update(Azienda a);
 	
+	int getNextId();
+	
 }

@@ -9,13 +9,17 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.dao.DaoFactory;
+import model.dao.idao.IDaoAziende;
 import model.dao.idao.IDaoDipendenti;
+import model.entities.Azienda;
 import model.entities.Dipendente;
 import model.entities.Ruolo;
 
 public class DaoDipendenti implements IDaoDipendenti{
 
 	private String dbAddress;
+	private IDaoAziende daoAz = null;
 	
 	public DaoDipendenti(String dbAddress) {
 		this.dbAddress = dbAddress;
@@ -89,6 +93,9 @@ public class DaoDipendenti implements IDaoDipendenti{
 
 	@Override
 	public boolean add(Dipendente d) {
+		daoAz = DaoFactory.makeA();
+		List<Azienda> aziende = daoAz.aziende();
+		boolean nondisponibile = false;
 		
 		try(Connection conn = DriverManager.getConnection(dbAddress);
 				PreparedStatement stm = conn.prepareStatement(
@@ -102,8 +109,22 @@ public class DaoDipendenti implements IDaoDipendenti{
 			stm.setDouble(4, d.getStipendio());
 			//stm.setDate(5, Date.valueOf(d.getDda()));
 			stm.setDate(5, new Date(d.getDda().getTime()));
-			stm.setInt(6, d.getIdAzienda());
+			
+			for(Azienda a : aziende) { 
+				if (a.getId() == d.getIdAzienda())
+					nondisponibile = true;
+			}
+			
+			if(nondisponibile)
+				stm.setInt(6, d.getIdAzienda());
+			else
+				stm.setNull(6, java.sql.Types.INTEGER);
+			
+			
+			
+			
 			stm.setInt(7, d.getIdRuolo());
+			
 			
 			if(stm.executeUpdate()>0) {
 				return true;
@@ -138,19 +159,38 @@ public class DaoDipendenti implements IDaoDipendenti{
 
 	@Override
 	public boolean update(Dipendente d) {
-		
+		daoAz = DaoFactory.makeA();
+		List<Azienda> aziende = daoAz.aziende();
+		boolean nondisponibile = false;
 		try(Connection conn = DriverManager.getConnection(dbAddress);
 				PreparedStatement stm = conn.prepareStatement(
 						"update DIPENDENTI set NOME = ?, COGNOME = ?, DDN = ?, STIPENDIO = ?, DDA = ?, ID_AZIENDA = ?, ID_RUOLO = ? where ID = ?")){
 			
 			stm.setString(1, d.getNome());
-			stm.setString(2, d.getCognome());
+			stm.setString(2, d.getCognome()); 
 			//stm.setDate(3, Date.valueOf(d.getDdn()));
 			stm.setDate(3, new Date(d.getDdn().getTime()));
 			stm.setDouble(4, d.getStipendio());
 			//stm.setDate(5, Date.valueOf(d.getDda()));
 			stm.setDate(5, new Date(d.getDda().getTime()));
-			stm.setInt(6, d.getIdAzienda());
+			
+			for(Azienda a : aziende) { 
+				
+				if (a.getId() == d.getIdAzienda())
+					
+					nondisponibile = true;
+			}
+			
+			if(nondisponibile) {
+				System.out.println("check");
+				stm.setInt(6, d.getIdAzienda());
+			} else {
+				stm.setNull(6, java.sql.Types.INTEGER);
+				
+			}
+			//stm.setInt(6, d.getIdAzienda());
+			
+			
 			stm.setInt(7, d.getIdRuolo());
 			
 			stm.setInt(8, d.getId());
@@ -244,6 +284,26 @@ public class DaoDipendenti implements IDaoDipendenti{
 		
 		return ris;
 		
+	}
+
+	@Override
+	public int getNextId() {
+		int nextId = 0;
+		try(Connection conn = DriverManager.getConnection(dbAddress);
+				PreparedStatement stm = conn.prepareStatement(
+						"select max(id) from dipendenti")){
+			
+			ResultSet rs = stm.executeQuery();
+			if(rs.next())
+				nextId = rs.getInt(1);
+			
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return (nextId + 1);
 	}
 
 	

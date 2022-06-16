@@ -1,14 +1,23 @@
 package controller;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
+
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -23,12 +32,18 @@ import model.entities.Azienda;
  */
 //@WebServlet({ "/prototype/aziende", "/prototype/aziende/*" })
 @WebServlet({ "/aziende", "/aziende/*" })
+@MultipartConfig(
+		fileSizeThreshold = 1024 * 1024 * 1,
+		maxFileSize = 1024 * 1024 * 10,
+		maxRequestSize = 1024 * 1024 * 100
+) 
 public class ControllerAziende extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	private IDaoAziende dao;  
+	private IDaoAziende dao;    
 	private Gson gson;
-       
+	private Map<Integer, String> estensioni;
+        
     /** 
      * @see HttpServlet#HttpServlet()
      */
@@ -36,13 +51,18 @@ public class ControllerAziende extends HttpServlet {
         super();
         dao = DaoFactory.makeA();
         gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+        estensioni = new HashMap<Integer, String>();
+        estensioni.put(0, "jpg");
+        estensioni.put(1, "jpg");
+        estensioni.put(2, "png");
+        estensioni.put(3, "png");
     }
          
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Response ris = new Response("", null);
+		Response ris = new Response("", null, estensioni);
 		String path = request.getPathInfo();
 		
 		if(path == null || path.equals("/")) {
@@ -50,30 +70,57 @@ public class ControllerAziende extends HttpServlet {
 			if(((List<Azienda>) ris.getObject()).size() > 0)
 				ris.setStatus("200");
 			else
-				ris.setStatus("1500");
+				ris.setStatus("1500");     
 			
-		} else {
+		} else { 
 			ris.setObject(dao.azienda(Integer.parseInt(path.substring(1))));
-		}
+		} 
 		
 		
 		    
 		response.setContentType("application/json");
-		response.getWriter().append(gson.toJson(ris));
+		response.getWriter().append(gson.toJson(ris)); 
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		Azienda az = aziendaFromRequest(request);
-		Response ris = new Response("", null);
+    
+		Azienda az = null;
+		Response ris = new Response("", null, null);
+		
+		Part jsonPart = request.getPart("json");
+		az = gson.fromJson(IOUtils.toString(jsonPart.getInputStream(), StandardCharsets.UTF_8), Azienda.class);
+		
+		
+		int addId = dao.getNextId();
+		Part imgPart = request.getPart("image");
+		if(imgPart.getSubmittedFileName() != null) {
+			estensioni.put(addId, imgPart.getSubmittedFileName().split("[.]")[1]); 
+			imgPart.write("C:\\Users\\m3107\\eclipse-workspace\\JAITA58\\10-Settimana\\NoPlay_RestfulProj_v1.0\\src\\main\\webapp\\images\\a"
+								+ addId
+								+ "."
+								+ estensioni.get(addId));
+		} else {
+			estensioni.put(addId, "jpg");
+			// Facciamo copy dell'immagine di default
+			String source = "C:\\Users\\m3107\\eclipse-workspace\\JAITA58\\10-Settimana\\NoPlay_RestfulProj_v1.0\\src\\main\\webapp\\images\\a0.jpg";
+			String dest = "C:\\Users\\m3107\\eclipse-workspace\\JAITA58\\10-Settimana\\NoPlay_RestfulProj_v1.0\\src\\main\\webapp\\images\\a"
+								+ addId
+								+ "."
+								+ estensioni.get(0);
+			FileUtils.copyFile(new File(source), new File(dest));
+		}
+		
+		
+		
 		
 		if(dao.add(az)) {
 			ris.setStatus("200");
+			ris.setEstensioni(estensioni);
 		} else {
-			ris.setStatus("1500");
+			ris.setStatus("1500"); 
 		}
 		
 		response.setContentType("application/json");
@@ -84,12 +131,28 @@ public class ControllerAziende extends HttpServlet {
 	
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		Azienda az = aziendaFromRequest(request);
-		Response ris = new Response("", null);
+		Azienda az = null;
+		Response ris = new Response("", null, null);
 		
-		if(dao.update(az))
-			ris.setStatus("200");
-		else 
+		Part jsonPart = request.getPart("json");
+		az = gson.fromJson(IOUtils.toString(jsonPart.getInputStream(), StandardCharsets.UTF_8), Azienda.class);
+		 
+		
+		Part imgPart = request.getPart("image");
+		if(imgPart != null) { 
+			estensioni.replace(az.getId(), imgPart.getSubmittedFileName().split("[.]")[1]);
+			// TODO DELETE IMG
+		}
+		imgPart.write("C:\\Users\\m3107\\eclipse-workspace\\JAITA58\\10-Settimana\\NoPlay_RestfulProj_v1.0\\src\\main\\webapp\\images\\a" 
+							+ az.getId() 
+							+ "."
+							+ estensioni.get(az.getId()));
+				 
+		
+		if(dao.update(az)) {
+			ris.setStatus("200"); 
+			ris.setEstensioni(estensioni);
+		} else 
 			ris.setStatus("1500"); 
 		
 		response.setContentType("application/json");
@@ -100,7 +163,7 @@ public class ControllerAziende extends HttpServlet {
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String path = request.getPathInfo();
-		Response ris = new Response("", null);
+		Response ris = new Response("", null, estensioni);
 		
 
 		if(path == null || path.equals("/")) {
@@ -108,7 +171,7 @@ public class ControllerAziende extends HttpServlet {
 		} else {
 			int id = Integer.parseInt(path.substring(1));
 			if(dao.delete(id))
-				ris.setStatus("200");
+				ris.setStatus("200");    
 			else
 				ris.setStatus("1500");
 		}		
@@ -122,7 +185,7 @@ public class ControllerAziende extends HttpServlet {
 	private Azienda aziendaFromRequest(HttpServletRequest request) throws IOException {
 		BufferedReader br = request.getReader();
 
-		String body = "";   
+		String body = "";       
 		//comment 2
 		
 		String riga = null;

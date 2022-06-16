@@ -147,6 +147,26 @@ public class DaoAziende implements IDaoAziende{
 		return false;
 	}
 
+	@Override
+	public int getNextId() {
+		int nextId = 0;
+		try(Connection conn = DriverManager.getConnection(dbAddress);
+				PreparedStatement stm = conn.prepareStatement(
+						"select max(id) from aziende")){
+			
+			ResultSet rs = stm.executeQuery();
+			if(rs.next())
+				nextId = rs.getInt(1);
+			
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return (nextId + 1);
+	}
+
 	
 	
 }

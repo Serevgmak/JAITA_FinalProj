@@ -15,7 +15,8 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="styleListaDipendenti.css">
     <script src="jquery-3.6.0.min.js"></script>
-    <script src="main.js"></script>
+    <script src="mainDipendenti.js"></script>
+    <style>#body { overflow-y: auto; }</style>
 </head>
 
 <body>
@@ -36,6 +37,11 @@
                             data-bs-target="#modal-aggiunta" data-bs-toggle="modal"
                             style="width: 120px;background: #535978;">Aggiungi</button></div>
                 </div>
+                <div style="margin: 5vh; ">
+                	<select id="selectFiltroRuoli" class="form-select" aria-label="filtroRuoli" style="background-color: #535978; color: white;">
+                	<option value="0" selected>Filtra per ruoli</option>
+                	</select>
+				</div>
             </div>
             <!-- seconda colonna -->
             <div class="col-md-4 col-xl-8">
@@ -59,26 +65,8 @@
                 <!-- terza riga lista-->
                 <div class="row" id="body"
                     style="margin-right: 0px;margin-left: 120px;margin-top: 20px;height: 129vh;width: 80%;">
-                    <div class="col" style="margin: 20px;">
-                        <div style="height: 15vh;width: 100%;margin-top: 20px;text-align: center;">
-                            <!-- terza riga 2, rettangolo con dettagli, suddiviso in due colonne-->
-                            <div class="row" id="rettangolo"
-                                style="margin-right: 0px;margin-left: 0px;height: 15vh;background: #accbe1; margin-top: 20px;margin-bottom: 5px;"
-                                data-bs-toggle="modal" data-bs-target="#modal-1">
-
-                                <!-- colonna foto profilo-->
-                                <div class="col-xl-3 profiloDipendente"
-                                    style="height: 85%;margin-top: 1vh;margin-left: 1vh;  ">
-                                </div>
-                                <!-- colonna dati dipendente-->
-                                <div class="col d-xl-flex justify-content-xl-start align-items-xl-center"
-                                    style="height: 12vh;margin-top: 10px;padding-right: 12px;padding-left: 0px;">
-                                    <p class="fs-4"
-                                        style="font-family: 'Source Code Pro', monospace;font-style: italic;margin-left: 40px;margin-right: 110px;">
-                                        MARIO ROSSI</p>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="col" style="margin: 20px;" id="outputDip">
+                        
                     </div>
                 </div>
             </div>
@@ -103,7 +91,7 @@
                                     <div class="card-body">
                                         <div class="d-flex flex-column align-items-center text-center">
                                             <img src="fotoACaso.jpg" alt="Admin" class="rounded-circle" width="150">
-                                            <div class="mt-3">
+                                            <div class="mt-3" id="headerDett">
                                                 <h4>Mario Rossi</h4>
                                                 <p class="text-secondary mb-1">Full Stack Developer</p>
                                                 <p class="text-muted font-size-sm">Pinco Pallino SPA</p>
@@ -119,7 +107,7 @@
                                             <div class="col-sm-5">
                                                 <h6 class="mb-0">Nome e Cognome</h6>
                                             </div>
-                                            <div class="col-sm-6 text-secondary">
+                                            <div class="col-sm-6 text-secondary" id="nomeCognomeDett">
                                                 Mario Rossi
                                             </div>
                                         </div>
@@ -128,7 +116,7 @@
                                             <div class="col-sm-5">
                                                 <h6 class="mb-0">Data di Nascita</h6>
                                             </div>
-                                            <div class="col-sm-6 text-secondary">
+                                            <div class="col-sm-6 text-secondary" id="ddnDett"> 
                                                 01-01-1991
                                             </div>
                                         </div>
@@ -137,7 +125,7 @@
                                             <div class="col-sm-5">
                                                 <h6 class="mb-0">Stipendio</h6>
                                             </div>
-                                            <div class="col-sm-6 text-secondary">
+                                            <div class="col-sm-6 text-secondary" id="stipendioDett">
                                                 1880.00€
                                             </div>
                                         </div>
@@ -146,7 +134,7 @@
                                             <div class="col-sm-5">
                                                 <h6 class="mb-0">Data di Assunzione</h6>
                                             </div>
-                                            <div class="col-sm-6 text-secondary">
+                                            <div class="col-sm-6 text-secondary" id="ddaDett">
                                                 17-06-2022
                                             </div>
                                         </div>
@@ -155,63 +143,8 @@
                                 </div>
                             </div>
                             <!-- Dettagli azienda -->
-                            <div class="col-md-6">
-                                <h3>AZIENDA DI RIFERIMENTO</h3>
-                                <div class="card mb-3">
-
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-sm-5">
-                                                <h6 class="mb-0">Ragione Sociale</h6>
-                                            </div>
-                                            <div class="col-sm-6 text-secondary">
-                                                Pinco Pallino SPA
-                                            </div>
-                                        </div>
-                                        <hr>
-                                        <div class="row">
-                                            <div class="col-sm-5">
-                                                <h6 class="mb-0">Email</h6>
-                                            </div>
-                                            <div class="col-sm-6 text-secondary">
-                                                pincopallino@pincopallino.it
-                                            </div>
-                                        </div>
-                                        <hr>
-                                        <div class="row">
-                                            <div class="col-sm-5">
-                                                <h6 class="mb-0">Partita IVA</h6>
-                                            </div>
-                                            <div class="col-sm-6 text-secondary">
-                                                5t68756785876568
-                                            </div>
-                                        </div>
-                                        <hr>
-                                        <div class="row">
-                                            <div class="col-sm-5">
-                                                <h6 class="mb-0">Numero di telefono</h6>
-                                            </div>
-                                            <div class="col-sm-6 text-secondary">
-                                                534535435
-                                            </div>
-                                        </div>
-
-                                        <hr>
-                                        <div class="row">
-                                            <div class="col-sm-5">
-                                                <h6 class="mb-0">Indirizzo</h6>
-                                            </div>
-                                            <div class="col-sm-6 text-secondary">
-                                                Via tal dei tali 12, Milano, MI
-                                            </div>
-                                        </div>
-                                        <hr>
-                                        <div class="row">
-
-                                        </div>
-                                    </div>
-                                </div>
-
+                            <div class="col-md-6" id ="aziendaRiferimento">
+                                
                             </div>
 
 
@@ -220,7 +153,7 @@
                 </div>
                 <!-- Card pulsanti elimina e modifica -->
                 <div class="modal-footer"> <a id="modificaDipendente" class="btn btn-info " target="__blank">Modifica</a>
-                    <a class="btn btn-info " target="__blank">Elimina</a>
+                    <a class="btn btn-info " target="__blank" id="btnDel">Elimina</a>
                 </div>
 
             </div>
@@ -231,13 +164,14 @@
 
 
     <!-- Inzio aggiunta dipendente-->
-    <div class="modal fade" role="dialog" tabindex="-1" id="modal-aggiunta">
+    <div display="none" class="modal fade" role="dialog" tabindex="-1" id="modal-aggiunta">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title" id="titoloModifica">AGGIUNGI PERSONALE</h4><button type="button" class="btn-close"
                         data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
+                <form onsubmit="event.preventDefault();">
                 <div class="modal-body">
                     <div class="main-body">
                         <!-- Card Parte principale con immagine -->
@@ -256,49 +190,46 @@
                                     </div>
                                 </div>
                                 <!-- Card Dettagli dipendente -->
+                                
                                 <div class="card mt-12">
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="input-group">
                                                 <span class="input-group-text">Nome e cognome</span>
-                                                <input type="text" aria-label="First name" class="form-control">
-                                                <input type="text" aria-label="Last name" class="form-control">
+                                                <input type="text" aria-label="First name" class="form-control" id="addNome" required>
+                                                <input type="text" aria-label="Last name" class="form-control" id="addCognome" required>
                                             </div>
                                         </div>
                                         <hr>
                                         <div class="row">
                                             <div class="input-group">
                                                 <span class="input-group-text">Data di nascita</span>
-                                                <input type="date" aria-label="Date" class="form-control">
+                                                <input type="date" aria-label="Date" class="form-control" id="addDdn" required>
                                             </div>
                                         </div>
                                         <hr>
                                         <div class="row">
                                             <div class="input-group">
                                                 <span class="input-group-text">Stipendio</span>
-                                                <input type="number" aria-label="stipendio" class="form-control">
+                                                <input type="number" aria-label="stipendio" class="form-control" id="addStipendio" required>
                                             </div>
                                         </div>
                                         <hr>
                                         <div class="row">
                                             <div class="input-group">
                                                 <span class="input-group-text">Data di assunzione</span>
-                                                <input type="date" aria-label="Date" class="form-control">
+                                                <input type="date" aria-label="Date" class="form-control" id="addDda" required>
                                             </div>
                                         </div>
                                         <hr>
-                                        <div class="row">
-                                            <div class="input-group">
-                                                <span class="input-group-text">Ruolo</span>
-                                                <input type="text" aria-label="Date" class="form-control">
-                                            </div>
-                                        </div>
+                                        <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="addSelectR" required>
+                                            <option selected value="" data-id="-1">Scegli ruolo</option>
+                                            
+                                        </select>
                                         <hr>
-                                        <select class="form-select form-select-sm" aria-label=".form-select-sm example">
-                                            <option selected>Scegli azienda di riferimento</option>
-                                            <option value="1">One</option>
-                                            <option value="2">Two</option>
-                                            <option value="3">Three</option>
+                                        <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="addSelectAz">
+                                            <option selected value="" data-id="-1">Scegli azienda di riferimento</option>
+                                            
                                         </select>
                                         <hr>
                                     </div>
@@ -310,25 +241,15 @@
                     </div>
                 </div>
                 <!-- Card pulsanti elimina e modifica -->
-                <div class="modal-footer"> <a class="btn btn-info " target="__blank">Salva</a>
+                <div class="modal-footer"> 
+                	<!-- <a class="btn btn-info " target="__blank" id="addBtn">Salva</a> -->
+                	<input type="submit" class="btn btn-info" target="__blank" id="addBtn" value="Salva">
                 </div>
+                </form>
 
             </div>
         </div>
     </div>
-    <!-- Fine modale -->
-    <div class="row">
-        <div class="input-group">
-            <span class="input-group-text">Stipendio</span>
-            <input type="number" aria-label="Stipendio" class="form-control">
-        </div>
-    </div>
-
-
-
-
-
-
 
 
 
@@ -363,47 +284,50 @@
                                         <div class="row">
                                             <div class="input-group">
                                                 <span class="input-group-text">Nome e cognome</span>
-                                                <input id="inputNome" type="text" aria-label="First name" class="form-control"
+                                                <input id="inputNomeUpd" type="text" aria-label="First name" class="form-control"
                                                     value="">
-                                                <input id="inputCognome" type="text" aria-label="Last name" class="form-control">
+                                                <input id="inputCognomeUpd" type="text" aria-label="Last name" class="form-control">
                                         </div>
                                     </div>
                                     <hr>
                                     <div class=" row">
                                                 <div class="input-group">
                                                     <span class="input-group-text">Data di nascita</span>
-                                                    <input id="inputDdn" type="date" aria-label="Date" class="form-control">
+                                                    <input id="inputDdnUpd" type="date" aria-label="Date" class="form-control">
                                                 </div>
                                             </div>
                                             <hr>
                                             <div class="row">
                                                 <div class="input-group">
                                                     <span class="input-group-text">Stipendio</span>
-                                                    <input id="inputStipendio" type="number" aria-label="stipendio" class="form-control">
+                                                    <input id="inputStipendioUpd" type="number" aria-label="stipendio" class="form-control">
                                                 </div>
                                             </div>
                                             <hr>
                                             <div class="row">
                                                 <div class="input-group">
                                                     <span class="input-group-text">Data di assunzione</span>
-                                                    <input id="inputDdassunzione" type="date" aria-label="Date" class="form-control">
+                                                    <input id="inputDdaUpd" type="date" aria-label="Date" class="form-control">
                                                 </div>
                                             </div>
-                                            <hr>
+                                            <!--<hr>
                                             <div class="row">
                                                 <div class="input-group">
                                                     <span class="input-group-text">Ruolo</span>
-                                                    <input id="inputRuolo" type="text" aria-label="Date" class="form-control">
+                                                    <input id="inputRuoloUpd" type="text" aria-label="Date" class="form-control">
                                                 </div>
-                                            </div>
+                                            </div> -->
                                             <hr>
-                                            <select id="inputSceltaAzienda" class="form-select form-select-sm"
-                                                aria-label=".form-select-sm example">
-                                                <option selected>Scegli azienda di riferimento</option>
-                                                <option value="1">One</option>
-                                                <option value="2">Two</option>
-                                                <option value="3">Three</option>
-                                            </select>
+                                            <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="inputSceltaRuolo">
+                                            <option selected value="0" data-id="0">Scegli ruolo</option>
+                                            
+                                        	</select>
+                                        	<hr>
+                                        	<select class="form-select form-select-sm" aria-label=".form-select-sm example" id="inputSceltaAzienda">
+                                            <option selected value="0" data-id="0">Scegli azienda di riferimento</option>
+                                            
+                                        	</select>
+                                        
                                             <hr>
                                         </div>
                                     </div>
@@ -414,20 +338,12 @@
                         </div>
                     </div>
                     <!-- Card pulsanti elimina e modifica -->
-                    <div class="modal-footer"> <a class="btn btn-info " target="__blank">Salva</a>
+                    <div class="modal-footer"> <a class="btn btn-info " target="__blank" id="salvaUpd">Salva</a>
                     </div>
 
                 </div>
             </div>
         </div>
-        <!-- Fine modale -->
-        <div class="row">
-            <div class="input-group">
-                <span class="input-group-text">Stipendio</span>
-                <input type="number" aria-label="Stipendio" class="form-control">
-            </div>
-        </div>
-
 
 
 

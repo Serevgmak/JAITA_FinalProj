@@ -6,7 +6,7 @@
   background: rgba(83,107,120,0.66);
 }
 
-#rettangolo:hover {
+.rettangolo:hover {
   background-color: #d5e2eb !important;
   cursor: pointer;
 }
