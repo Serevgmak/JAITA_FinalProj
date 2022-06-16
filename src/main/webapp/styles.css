@@ -1,0 +1,63 @@
+#sidebar {
+  width: 30rem !important;
+  min-height: 100vh;
+  background: rgba(172,203,225,0.86);
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  border-top-right-radius: 17px;
+  border-bottom-right-radius: 17px;
+  box-shadow: 7px 0px rgba(33,37,41,0.63);
+  border-width: 15px;
+  border-color: rgb(228,236,244);
+  border-right-color: var(--bs-white);
+}
+
+#logo {
+  text-align: center;
+  /*margin-right: 0px;*/
+  /*margin-left: 50px;*/
+  padding-top: 100px;
+}
+
+#titolo {
+  /*background: #accbe1;*/
+  margin-top: 40px;
+}
+
+#sottotitolo {
+  margin-top: 35px;
+}
+
+#rigadipendenti {
+  background: rgb(213,226,235);
+  height: 300px;
+  border-bottom: 12px solid #343d69 ;
+  margin-left: 0px;
+  margin-right: 0px;
+  width: 700px;
+}
+
+#rigaaziende {
+  height: 300px;
+  border-bottom: 12px solid #343d69 ;
+  margin-right: 0px;
+  margin-left: 0px;
+  width: 700px;
+}
+
+/* #content-wrapper {
+  background: url("sfondo filtro.jpg");
+} */
+
+#cont {
+  background: url("assets/img/sfondo filtro.jpg") center / contain repeat;
+}
+
+#imgcard {
+  flex: auto;
+  width: 10%;
+  border-radius: 25px;
+  border-top-left-radius: 25px;
+  border-bottom-left-radius: 25px;
+}

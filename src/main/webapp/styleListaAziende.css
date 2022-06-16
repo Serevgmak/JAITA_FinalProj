@@ -6,12 +6,45 @@
     background: rgba(83,107,120,0.66);
   }
 
-  .rettangolo:hover {
-    background-color: #d5e2eb !important;
-    cursor: pointer;
-  }
+  
 
   .profiloAzienda{
     height: 100%;
     width: 100%;
+  }
+  
+  table{
+    background: #accbe1;
+    width: 100%;
+    height: 15vh;
+    border-radius: 10px;
+    margin-bottom: 10px;
+  }
+
+  table:hover {
+    background-color: #d5e2eb !important;
+    cursor: pointer;
+  }
+
+  p{
+    font-family: 'Source Code Pro', monospace;
+    font-style: italic;
+    font-size: x-large;
+  }
+
+  thead{
+    align-items: center;
+    vertical-align: auto;
+    border-radius: 10px;
+  }
+  .thLeft{
+    padding-left: 10%;
+    width: 40%;
+
+  }
+
+  img{
+    width: 100px;
+    height: 100px;
+    border-radius: 10%;
   }

@@ -57,7 +57,7 @@ $(document).ready(function () {
 
 
 function getAziende(){
-
+		
         //lista aziende
         $.get('aziende', function(res){
 			//console.log(res.estensioni);
@@ -71,31 +71,46 @@ function getAziende(){
 			//src="file:/C:/Users/m3107/eclipse-workspace/JAITA58/10-Settimana/NoPlay_RestfulProj_v1.0/src/main/webapp/images/a${az.id}.jpg"
 			
             $('#outputAz').html('');
-            for(const az of res.object){ 
-                //console.log(gioco.datauscita);
-                $(`<div style="height: 15vh;width: 100%;margin-top: 20px;text-align: center; " class="listaAziende">
-                            <div class="row rettangolo" data-id="${az.id}"
-                                style="margin-right: 0px;margin-left: 0px;height: 15vh;background: #accbe1;margin-top: 20px;margin-bottom: 5px;"
-                                data-bs-toggle="modal" data-bs-target="#modal-dettaglioAzienda">
-
-                                <!-- Qui inserire immagine azienda -->
-                                <div class="col-xl-3 d-flex flex-column align-items-center text-center"
-                                    style="height: 85%;margin-top: 1vh;margin-left: 1vh;">
-                                    
-                                    <img class="img-fluid" src="./images/a${az.id}.${estensioni.get("" + az.id)}" 
-                                    width='100' height='100' style="vertical-align:middle;  margin-top:1vh;">
-                                                    
-                                    </div>
-                                <div class="col d-xl-flex justify-content-xl-start align-items-xl-center"
-                                    style="height: 12vh;margin-top: 10px;padding-right: 12px;padding-left: 0px;">
-                                    <p  class="fs-4 nomeAziendaLista"
-                                        style="font-family: 'Source Code Pro', monospace;font-style: italic;margin-left: 40px;margin-right: 110px;">
-                                        ${az.ragioneSociale}</p>
-                                </div>
+//            for(const az of res.object){ 
+//                //console.log(gioco.datauscita);
+//                $(`<div style="height: 15vh;width: 100%;margin-top: 20px;text-align: center; " class="listaAziende">
+//                            <div class="row rettangolo" data-id="${az.id}"
+//                                style="margin-right: 0px;margin-left: 0px;height: 15vh;background: #accbe1;margin-top: 20px;margin-bottom: 5px;"
+//                                data-bs-toggle="modal" data-bs-target="#modal-dettaglioAzienda">
+//
+//                                <!-- Qui inserire immagine azienda -->
+//                                <div class="col-xl-3 d-flex flex-column align-items-center text-center"
+//                                    style="height: 85%;margin-top: 1vh;margin-left: 1vh;">
+//                                    
+//                                    <img class="img-fluid" src="./images/a${az.id}.${estensioni.get("" + az.id)}" 
+//                                    width='100' height='100' style="vertical-align:middle;  margin-top:1vh;">
+//                                                    
+//                                    </div>
+//                        
+//                                <div class="col d-xl-flex justify-content-xl-start align-items-xl-center"
+//                                    style="height: 12vh;margin-top: 10px;padding-right: 12px;padding-left: 0px;">
+//                                    <p  class="fs-4 nomeAziendaLista"
+//                                        style="font-family: 'Source Code Pro', monospace;font-style: italic;margin-left: 40px;margin-right: 110px;">
+//                                        ${az.ragioneSociale}</p>
+//                                </div>
+//                            </div>
+//                        </div>`).appendTo($('#outputAz'));
+//
+//            }
+			for(const az of res.object){
+				$(`<div class="listaAziende"   data-bs-toggle="modal" data-bs-target="#modal-dettaglioAzienda">
+                            <div class="rettangolo" data-id="${az.id}">
+                                <table>
+                                    <thead>
+                                        <th class="thLeft"><img id="imgLogoAz" src="./images/a${az.id}.${estensioni.get("" + az.id)}" alt="LogoAzienda"></th>
+                                        <th><p>${az.ragioneSociale}</p></th>
+                                    </thead>
+                                </table>
                             </div>
-                        </div>`).appendTo($('#outputAz'));
-
-            }
+                        </div>`).appendTo($('#outputAz'));	
+			
+			
+			}
 
         });
 
@@ -118,7 +133,7 @@ function getAziende(){
     function inspectAz(id) {
         $.get(`aziende/${id}`, function (res) {
 			let estensioni = new Map(Object.entries(res.estensioni));
-            console.log(estensioni.get("" + res.object.id))
+            //console.log(estensioni.get("" + res.object.id))
             $('#imgDettAz').html('');
             $(`<img
                 class="rounded-circle"
@@ -221,7 +236,7 @@ function getAziende(){
     
     
     function addAzienda(data){
-
+		 console.log(data.get('json'));
 //        $.post('aziende', JSON.stringify(az), function(res){
 //            if (res.status == '200') {
 //				//$('#modal-aggiuntaAzienda').modal('hide');
@@ -235,20 +250,41 @@ function getAziende(){
 //
 //        });
 
-		  $.ajax({
-            url: 'aziende',
-            type: 'POST',
-            enctype : 'multipart/form-data',
-            data: data,
-            processData : false,
-            contentType : false,
-            //data: formData,
-            success: function(res){
-            		location.reload(true);
-                    $('#outputAz').html('');
-                	getAziende();
-                }
-            })
+//		  $.ajax({
+//            url: 'aziende',
+//            type: 'POST',
+//            enctype : 'multipart/form-data',
+//            data: data,
+//            processData : false,
+//            contentType : false,
+//            //data: formData,
+//            success: function(res){
+//            		//location.reload(true);
+//            		//window.location.href = "listaAziende.html";
+//                    $('#outputAz').html('');
+//                	getAziende();
+//                }
+//            })
+//            location.reload(true);
+//            setTimeout(function(){}, 1000);
+
+
+
+
+			var settings = {
+  			"url": "aziende",
+  			"method": "POST",
+  			"timeout": 0,
+  			"processData": false,
+  			"mimeType": "multipart/form-data",
+  			"contentType": false,
+  			"data": data
+			};
+
+			$.ajax(settings).done(function (response) {
+  				$('#outputAz').html('');
+              	getAziende();
+			});
     }
     
     
@@ -362,9 +398,6 @@ function getAziende(){
 
    
    $('#modal-dettaglioAzienda').on('click', '.btnDeleteAz', function(){
-        //const id = $(this).attr('data-id');
-
-        //deleteAzienda(id, $(this).parent().parent());
         deleteAzienda(deleteId);
     })
 

@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,10 +53,11 @@ public class ControllerAziende extends HttpServlet {
         dao = DaoFactory.makeA();
         gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
         estensioni = new HashMap<Integer, String>();
-        estensioni.put(0, "jpg");
-        estensioni.put(1, "jpg");
-        estensioni.put(2, "jpg");
-        estensioni.put(3, "png");
+//        estensioni.put(0, "jpg");
+//        estensioni.put(1, "jpg");
+//        estensioni.put(2, "jpg");
+//        estensioni.put(3, "png");
+        inizializareMappa();
     }
          
 	/**
@@ -79,7 +81,7 @@ public class ControllerAziende extends HttpServlet {
 		
 		    
 		response.setContentType("application/json");
-		response.getWriter().append(gson.toJson(ris)); 
+		response.getWriter().append(gson.toJson(ris));  
 	}
 
 	/**
@@ -90,7 +92,7 @@ public class ControllerAziende extends HttpServlet {
 		Azienda az = null;
 		Response ris = new Response("", null, null);
 		
-		Part jsonPart = request.getPart("json");
+		Part jsonPart = request.getPart("json"); 
 		az = gson.fromJson(IOUtils.toString(jsonPart.getInputStream(), StandardCharsets.UTF_8), Azienda.class);
 		
 		
@@ -98,20 +100,20 @@ public class ControllerAziende extends HttpServlet {
 		
 		
 		
-		if(dao.add(az)) {
+		if(dao.add(az)) {   
 			int addId = dao.getNextId() - 1;
 			Part imgPart = request.getPart("image");
 			if(imgPart.getSubmittedFileName() != null) {
 				estensioni.put(addId, imgPart.getSubmittedFileName().split("[.]")[1]); 
-				imgPart.write("C:\\Users\\m3107\\eclipse-workspace\\JAITA58\\10-Settimana\\NoPlay_RestfulProj_v1.0\\src\\main\\webapp\\images\\a"
+				imgPart.write("C://Users//m3107//eclipse-workspace//JAITA58//10-Settimana//NoPlay_RestfulProj_v1.0//src//main//webapp//images//a"
 						+ addId
 						+ "."
-						+ estensioni.get(addId)); 
+						+ estensioni.get(addId));   
 			} else {
 				estensioni.put(addId, "jpg");
 				// Facciamo copy dell'immagine di default
-				String source = "C:\\Users\\m3107\\eclipse-workspace\\JAITA58\\10-Settimana\\NoPlay_RestfulProj_v1.0\\src\\main\\webapp\\images\\a0.jpg";
-				String dest = "C:\\Users\\m3107\\eclipse-workspace\\JAITA58\\10-Settimana\\NoPlay_RestfulProj_v1.0\\src\\main\\webapp\\images\\a"
+				String source = "C://Users//m3107//eclipse-workspace//JAITA58//10-Settimana//NoPlay_RestfulProj_v1.0//src//main//webapp//images//a0.jpg";
+				String dest = "C://Users//m3107//eclipse-workspace//JAITA58//10-Settimana//NoPlay_RestfulProj_v1.0//src//main//webapp//images//a"
 						+ addId
 						+ "."
 						+ estensioni.get(addId);
@@ -140,14 +142,14 @@ public class ControllerAziende extends HttpServlet {
 		
 		Part imgPart = request.getPart("image");
 		if(imgPart.getSubmittedFileName() != null) {
-			String source = "C:\\Users\\m3107\\eclipse-workspace\\JAITA58\\10-Settimana\\NoPlay_RestfulProj_v1.0\\src\\main\\webapp\\images\\a"
+			String source = "C://Users//m3107//eclipse-workspace//JAITA58//10-Settimana//NoPlay_RestfulProj_v1.0//src//main//webapp//images//a"
 							+ az.getId()
 							+ "."
 							+ estensioni.get(az.getId());
 			File img = new File(source);
 			img.delete();
 			estensioni.replace(az.getId(), imgPart.getSubmittedFileName().split("[.]")[1]);
-			imgPart.write("C:\\Users\\m3107\\eclipse-workspace\\JAITA58\\10-Settimana\\NoPlay_RestfulProj_v1.0\\src\\main\\webapp\\images\\a" 
+			imgPart.write("C://Users//m3107//eclipse-workspace//JAITA58//10-Settimana//NoPlay_RestfulProj_v1.0//src//main//webapp//images//a" 
 					+ az.getId() 
 					+ "."
 					+ estensioni.get(az.getId()));
@@ -175,7 +177,7 @@ public class ControllerAziende extends HttpServlet {
 		} else {
 			int id = Integer.parseInt(path.substring(1));
 			if(dao.delete(id)) {
-				String source = "C:\\Users\\m3107\\eclipse-workspace\\JAITA58\\10-Settimana\\NoPlay_RestfulProj_v1.0\\src\\main\\webapp\\images\\a"
+				String source = "C://Users//m3107//eclipse-workspace//JAITA58//10-Settimana//NoPlay_RestfulProj_v1.0//src//main//webapp//images//a"
 						+ id
 						+ "."
 						+ estensioni.get(id);
@@ -209,6 +211,24 @@ public class ControllerAziende extends HttpServlet {
 		
 		br.close();
 		return az;
+	}
+	
+	
+	private void inizializareMappa() {
+		List<String> nomi = new ArrayList<String>();
+		File[] files = new File("C:/Users/m3107/eclipse-workspace/JAITA58/10-Settimana/NoPlay_RestfulProj_v1.0/src/main/webapp/images").listFiles();
+		
+		for(File f : files) {
+			if(f.isFile())
+				nomi.add(f.getName());
+		}
+		
+		for(String s : nomi) {
+			if(s.charAt(0) == 'a') {
+				this.estensioni.put(Integer.parseInt(s.split("[.]")[0].substring(1)), s.split("[.]")[1]);
+			}
+		}
+		
 	}
 	
 

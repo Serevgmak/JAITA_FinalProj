@@ -1,6 +1,7 @@
 $(document).ready(function () {
 
 	var editId = -1;
+	var editEst = "";
 	var deleteId = -1;
 	var editMode = false;
 	const editDip = {
@@ -50,41 +51,76 @@ $(document).ready(function () {
     getAziende();    
         
         
-    function getDipendenti(){
+//    function getDipendenti(){
+//
+//        //lista aziende
+//        $.get('dipendenti', function(res){
+//
+//            $('#outputDip').html('');
+//            for(const dip of res.object){ 
+//                //console.log(gioco.datauscita);
+//                $(`<div style="height: 15vh;width: 100%;margin-top: 20px;text-align: center;">
+//                            <!-- terza riga 2, rettangolo con dettagli, suddiviso in due colonne-->
+//                            <div class="row rettangolo" data-id="${dip.id}"
+//                                style="margin-right: 0px;margin-left: 0px;height: 15vh;background: #accbe1; margin-top: 20px;margin-bottom: 5px;"
+//                                data-bs-toggle="modal" data-bs-target="#modal-1">
+//
+//                                <!-- colonna foto profilo-->
+//                                <div class="col-xl-3 profiloDipendente"
+//                                    style="height: 85%;margin-top: 1vh;margin-left: 1vh;  ">
+//                                </div>
+//                                <!-- colonna dati dipendente-->
+//                                <div class="col d-xl-flex justify-content-xl-start align-items-xl-center"
+//                                    style="height: 12vh;margin-top: 10px;padding-right: 12px;padding-left: 0px;">
+//                                    <p class="fs-4"
+//                                        style="font-family: 'Source Code Pro', monospace;font-style: italic;margin-left: 40px;margin-right: 110px;">
+//                                        ${dip.nome} ${dip.cognome}</p>
+//                                </div>
+//                            </div>
+//                        </div>`).appendTo($('#outputDip'));
+//
+//            }
+//
+//        });
+//
+//
+//    }
+//    getDipendenti();
 
-        //lista aziende
+
+
+	function getDipendenti(){
         $.get('dipendenti', function(res){
-
-            $('#outputDip').html('');
-            for(const dip of res.object){ 
-                //console.log(gioco.datauscita);
-                $(`<div style="height: 15vh;width: 100%;margin-top: 20px;text-align: center;">
-                            <!-- terza riga 2, rettangolo con dettagli, suddiviso in due colonne-->
-                            <div class="row rettangolo" data-id="${dip.id}"
-                                style="margin-right: 0px;margin-left: 0px;height: 15vh;background: #accbe1; margin-top: 20px;margin-bottom: 5px;"
-                                data-bs-toggle="modal" data-bs-target="#modal-1">
-
-                                <!-- colonna foto profilo-->
-                                <div class="col-xl-3 profiloDipendente"
-                                    style="height: 85%;margin-top: 1vh;margin-left: 1vh;  ">
-                                </div>
-                                <!-- colonna dati dipendente-->
-                                <div class="col d-xl-flex justify-content-xl-start align-items-xl-center"
-                                    style="height: 12vh;margin-top: 10px;padding-right: 12px;padding-left: 0px;">
-                                    <p class="fs-4"
-                                        style="font-family: 'Source Code Pro', monospace;font-style: italic;margin-left: 40px;margin-right: 110px;">
-                                        ${dip.nome} ${dip.cognome}</p>
-                                </div>
+			let estensioni = new Map(Object.entries(res.estensioni));
+			
+			// ATTENZIONE 
+			// DOPO new Map(Object.entries()) I KEY SARANNO DI TIPO STRING!
+			//console.log(estensioni.get("" + 0));
+			
+            $('#outputDip').html(''); 
+			for(const dip of res.object){
+				$(`<div data-bs-toggle="modal" data-bs-target="#modal-1">
+                            <div class="rettangolo" data-id="${dip.id}">
+                                <table>
+                                    <thead>
+                                        <th class="thLeft"><img id="imgDip" style="background:url('./images/d0.jpg')" src="./images/d${dip.id}.${estensioni.get("" + dip.id)}" ></th>
+                                        <th><p class="titoloLista">${dip.nome} ${dip.cognome}</p></th>
+                                    </thead>
+                                </table>
                             </div>
-                        </div>`).appendTo($('#outputDip'));
-
-            }
+                        </div>`).appendTo($('#outputDip'));	
+			
+			
+			}
 
         });
 
 
     }
     getDipendenti();
+
+
+	
         
         
         
@@ -93,18 +129,19 @@ $(document).ready(function () {
         const id = $(this).attr('data-id');
         inspectDip(id);
         getDipendenti();
-        //inspectAzDip(id);
     })
     
     
     
     function inspectDip(id) {
         $.get(`dipendenti/${id}`, function (res) {
+			let estensioni = new Map(Object.entries(res.estensioni));
 			let aziendaNome = "";
 			let azienda = null;
+
+            $('#imgDettDip').attr("src", `./images/d${res.object.id}.${estensioni.get("" + res.object.id)}`);  
 			$('#aziendaRiferimento').html("");
 			for(let i = 0; i < arrayAziende.length; i++){
-				//console.log(arrayAziende[i][1].ragioneSociale)
 				if(res.object.idAzienda == arrayAziende[i][0]){
 					azienda = arrayAziende[i][1]; 
 					aziendaNome = azienda.ragioneSociale;
@@ -218,7 +255,9 @@ $(document).ready(function () {
     
     $('#modal-aggiunta').on('click', '#addBtn', function(){
 		
+		
         const dip = {
+				id: 0,
                 nome: $('#addNome').val(),
                 cognome: $('#addCognome').val(), 
                 ddn: $('#addDdn').val(), 
@@ -228,12 +267,16 @@ $(document).ready(function () {
                 idAzienda: $('option:selected', "#addSelectAz").attr('data-id'), 
         };
 		
+		let data = new FormData();
+		data.append('image', $('#formFileSm')[0].files[0]);
+		data.append('json', JSON.stringify(dip));
+		
 //		if(dip.idRuolo == -1){
 //			alert('Scegli ruolo');
 //		}
 		
         if(!editMode && dip.idRuolo != -1){
-            addDipendente(dip);
+            addDipendente(data);
         }
         
         
@@ -243,26 +286,46 @@ $(document).ready(function () {
     });
     
     
-    function addDipendente(dip){
+    function addDipendente(data){
+		  console.log(data.get('json'));
 
-        $.post('dipendenti', JSON.stringify(dip), function(res){
-            if (res.status == '200') {
-				$('#modal-aggiunta').modal('hide');
-                getDipendenti();
-            } else {
-                alert('Attenzione qualcosa e andato storto');
-            }
+		  $.ajax({
+            url: 'dipendenti',
+            type: 'POST',
+            datatype : 'multipart/form-data',
+            data: data,
+            timeout: 0,
+            processData : false,
+            contentType : false,
+            success: function(res){
+                    //$('#outputDip').html('');
+                    //getDipendenti();                	
+                }
+            })
 
 
+//			var settings = {
+//  			"url": "dipendenti",
+//  			"method": "POST",
+//  			"timeout": 0,
+//  			"processData": false,
+//  			"mimeType": "multipart/form-data",
+//  			"contentType": false,
+//  			"data": data
+//			};
+//
+//			$.ajax(settings).done(function (response) {
+//				$('#modal-aggiunta').modal('hide');
+//  				$('#outputDip').html('');
+//              	getDipendenti();
+//			});
 
-        });
     }
     
     
     
     
     $('#modal-1').on('click', '#btnDel', function(){
-
         deleteDipendente(deleteId);
     })
 
@@ -274,6 +337,7 @@ $(document).ready(function () {
             type: 'DELETE',
             success: function(res){
                 if(res.status == '200'){
+					$('#outputDip').html('');
 	                $('#modal-1').modal('hide');
                 	getDipendenti();
                 } else if (res.status == '1500') {
@@ -320,26 +384,55 @@ $(document).ready(function () {
             editDip.idRuolo = $('#inputSceltaRuolo').val();
             editDip.idAzienda = $('#inputSceltaAzienda').val();
             
-            modificaDipendente(editDip);
+            let data = new FormData();
+			data.append('image', $('#formFileSmUpd')[0].files[0]);
+			data.append('json', JSON.stringify(editDip));
+            modificaDipendente(data);
 	
 	})
     
-    function modificaDipendente(dip) {
+    function modificaDipendente(data) {
 			
         $.ajax({
             url: 'dipendenti',
             type: 'PUT',
-            data: JSON.stringify(dip),
+            datatype: "multipart/form-data",
+            processData: false,
+            contentType: false,
+  			data: data,
             success: function(res){
                 if (res.status == '200'){
                     editMode = false;
-                    $('#modal-modificaDipendente').modal('hide');
                     getDipendenti();
+                $('#modal-modificaDipendente').modal('hide');
+                $('#modal-1').modal('show');
                 } else if (res.status == '1500'){
                     alert('Qualcosa e andato storto...');
                 }
             }
         })
+
+//		  var settings = {
+//  			"url": "dipendenti",
+//  			"method": "PUT",
+//  			"timeout": 0,
+//  			"processData": false,
+//  			"mimeType": "multipart/form-data",
+//  			"contentType": false,
+//  			"data": data
+//			};
+//
+//			$.ajax(settings).done(function (response) {
+//				editMode = false;
+//                getDipendenti();
+//                $('#modal-modificaDipendente').modal('hide');
+//                $('#modal-1').modal('show');
+//			});
+
+
+
+
+
     }
     
     
@@ -348,6 +441,7 @@ $(document).ready(function () {
     
     $('#selectFiltroRuoli').change(function(){
 		const idRuolo = $('#selectFiltroRuoli').val()
+		
 		console.log(idRuolo)
 		
 		if (idRuolo == "0"){
@@ -355,27 +449,19 @@ $(document).ready(function () {
 			getDipendenti();
 		} else {			
 			$.get(`dipendenti/r${idRuolo}`, function(res){
+			let estensioni = new Map(Object.entries(res.estensioni));
             $('#outputDip').html('');
             //console.log(res);
             for(const dip of res.object){ 
                 //console.log(gioco.datauscita);
-                $(`<div style="height: 15vh;width: 100%;margin-top: 20px;text-align: center;">
-                            <!-- terza riga 2, rettangolo con dettagli, suddiviso in due colonne-->
-                            <div class="row rettangolo" data-id="${dip.id}"
-                                style="margin-right: 0px;margin-left: 0px;height: 15vh;background: #accbe1; margin-top: 20px;margin-bottom: 5px;"
-                                data-bs-toggle="modal" data-bs-target="#modal-1">
-
-                                <!-- colonna foto profilo-->
-                                <div class="col-xl-3 profiloDipendente"
-                                    style="height: 85%;margin-top: 1vh;margin-left: 1vh;  ">
-                                </div>
-                                <!-- colonna dati dipendente-->
-                                <div class="col d-xl-flex justify-content-xl-start align-items-xl-center"
-                                    style="height: 12vh;margin-top: 10px;padding-right: 12px;padding-left: 0px;">
-                                    <p class="fs-4"
-                                        style="font-family: 'Source Code Pro', monospace;font-style: italic;margin-left: 40px;margin-right: 110px;">
-                                        ${dip.nome} ${dip.cognome}</p>
-                                </div>
+                $(`<div data-bs-toggle="modal" data-bs-target="#modal-1">
+                            <div class="rettangolo" data-id="${dip.id}">
+                                <table>
+                                    <thead>
+                                        <th class="thLeft"><img id="imgDip" style="background:url('./images/d0.jpg')" src="./images/d${dip.id}.${estensioni.get("" + dip.id)}" ></th>
+                                        <th><p class="titoloLista">${dip.nome} ${dip.cognome}</p></th>
+                                    </thead>
+                                </table>
                             </div>
                         </div>`).appendTo($('#outputDip'));
 

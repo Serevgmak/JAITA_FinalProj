@@ -11,6 +11,7 @@
         href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,600,800,800i,900,900i&amp;display=swap">
     <link rel="stylesheet" href="styleListaAziende.css">
     <!-- link per icone -->
+    <link rel="icon" type="image/x-icon" href="favicon-32x32.png">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src="jquery-3.6.0.min.js"></script>
     <script src="mainAziende.js"></script>
@@ -49,8 +50,7 @@
                         </h2>
                     </div>
                 </div>
-                <div class="row" id="body"
-                    style="margin-right: 0px;margin-left: 120px;margin-top: 20px;height: 129vh;width: 80%;">
+                <div class="row" id="body" style="margin-right: 0px;margin: auto;height: 129vh;width: 80%;">
                     <div class="col" style="margin: 20px;" id="outputAz">
                         
                     </div>
@@ -148,6 +148,7 @@
                                     <div class="row gutters-sm">
                                         <div class="col-sm-12 mb-3">
                                             <div class="card h-100">
+                                            	<!--   
                                                 <div class="card-body">
                                                     <h6 class="d-flex align-items-center mb-3"><i
                                                             class="material-icons text-info mr-2">&#xe85d;</i>NOTE</h6>
@@ -156,6 +157,7 @@
                                                         enim ad minim veniam, quis nostrud exercitation ullamco laboris
                                                         nisi ut aliquip ex ea commodo consequat. </p>
                                                 </div>
+                                                -->
                                             </div>
                                         </div>
                                     </div>
@@ -176,7 +178,7 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">AGGIUNGI PERSONALE</h4><button type="button" class="btn-close"
+                    <h4 class="modal-title">AGGIUNGI AZIENDA</h4><button type="button" class="btn-close"
                         data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -242,8 +244,8 @@
                         </div>
                     </div>
                 </div>
-                <!-- Card pulsanti elimina e modifica -->
-                <div class="modal-footer"> <a class="btn btn-info " target="__blank" id="addBtn" data-bs-dismiss="modal">Salva</a>
+                <!-- Card pulsanti elimina e modifica    onclick="location.href = 'listaAziende.html'" -->
+                <div class="modal-footer"> <a class="btn btn-info " target="__blank" id="addBtn" data-bs-dismiss="modal" >Salva</a>
                 </div>
 
             </div>
