@@ -65,3 +65,8 @@ body{
     font-size: xx-large;
     margin-top: 2vh;
 }
+
+#goLink{
+    text-decoration: none;
+    cursor: default;
+}

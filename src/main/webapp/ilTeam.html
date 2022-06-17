@@ -1,22 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="favicon-32x32.png">
+    <script src="jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="ilTeamStyle.css">
-
     <title>Il Team</title>
 </head>
+
 <body>
-    <div class="morphing">        
-        <div class="saluti">Grazie per tutto!</div>
-        <div class="saluti2">JAITA58 - NoPlay</div>
-        <div class="word">Dario Comino</div>
-        <div class="word">Leonardo Paglia</div>
-        <div class="word">Marco Momo</div>
-        <div class="word">Sergei Makarov</div>
-        <div class="word">Silvia Rondinelli</div>
-    </div>
+    <a id="goLink" href='index.html'>
+        <div class="morphing">
+            <div class="saluti">Grazie per tutto!</div>
+            <div class="saluti2">JAITA58 - NoPlay</div>
+            <div class="word">Dario Comino</div>
+            <div class="word">Leonardo Paglia</div>
+            <div class="word">Marco Momo</div>
+            <div class="word">Sergei Makarov</div>
+            <div class="word">Silvia Rondinelli</div>
+        </div>
+    </a>
 </body>
+<script>
+    $(document).ready(function () {
+        jQuery(function ($) {
+            $('#goLink').click(function () {
+                return false;
+            }).dblclick(function () {
+                window.location = this.href;
+                return false;
+            });
+        });
+    });
+</script>
+
 </html>
