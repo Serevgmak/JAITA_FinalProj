@@ -36,7 +36,7 @@ public class DaoAziende implements IDaoAziende{
 							rs.getLong("piva"),
 							rs.getString("indirizzo"),
 							rs.getString("email"),
-							rs.getInt("ntelefono")));
+							rs.getLong("ntelefono")));
 			}
 			
 		} catch (SQLException e) {
@@ -65,7 +65,7 @@ public class DaoAziende implements IDaoAziende{
 							rs.getLong("piva"),
 							rs.getString("indirizzo"),
 							rs.getString("email"),
-							rs.getInt("ntelefono"));
+							rs.getLong("ntelefono"));
 			}
 			
 		} catch (SQLException e) {
@@ -88,7 +88,7 @@ public class DaoAziende implements IDaoAziende{
 			stm.setLong(2, a.getpIva());
 			stm.setString(3, a.getIndirizzo());
 			stm.setString(4, a.getMail());
-			stm.setInt(5, a.getTelefono());
+			stm.setLong(5, a.getTelefono());
 			
 			if(stm.executeUpdate()>0) {
 				return true;
@@ -132,7 +132,7 @@ public class DaoAziende implements IDaoAziende{
 			stm.setLong(2, a.getpIva());
 			stm.setString(3, a.getIndirizzo());
 			stm.setString(4, a.getMail());
-			stm.setInt(5, a.getTelefono()); 
+			stm.setLong(5, a.getTelefono()); 
 			
 			stm.setInt(6, a.getId());
 			

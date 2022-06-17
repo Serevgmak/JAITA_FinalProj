@@ -97,7 +97,7 @@ public class ControllerDipendenti extends HttpServlet {
 		
 		response.setContentType("application/json"); 
 		response.getWriter().append(gson.toJson(ris));
-	}
+	}  
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
@@ -120,38 +120,6 @@ public class ControllerDipendenti extends HttpServlet {
 						+ addId 
 						+ "."
 						+ estensioni.get(addId));
-//				String newImgPath = "C://Users//m3107//eclipse-workspace//JAITA58//10-Settimana//NoPlay_RestfulProj_v1.0//src//main//webapp//images//d"
-//						+ addId
-//						+ "."
-//						+ estensioni.get(addId);
-//				Path newPath = Paths.get(newImgPath);
-//				OutputStream output = Files.newOutputStream(newPath);
-//				IOUtils.copy(imgPart.getInputStream(), output);
-//				output.close();  
-				//imgPart.getInputStream().close();
-				 
-//				String newImgPath = "C://Users//m3107//eclipse-workspace//JAITA58//10-Settimana//NoPlay_RestfulProj_v1.0//src//main//webapp//images//d"
-//						+ addId
-//						+ "."
-//						+ estensioni.get(addId);
-//				
-//				
-//				File newImgOut = new File(newImgPath) ;
-//		        BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(newImgOut));
-//		        InputStream is = imgPart.getInputStream();
-//		        byte [] bytes = new byte[1024];
-//		        int sizeRead;
-//		        while ((sizeRead = is.read(bytes,0, 1024)) > 0) {
-//		            stream.write(bytes, 0, sizeRead);
-//		        }
-//		        stream.flush();
-//		        stream.close();
-//		        System.out.println( "You successfully uploaded file !" ); 
-				
-				
-				
-				
-				
 			} else {
 				estensioni.put(addId, "jpg");
 				// Facciamo copy dell'immagine di default
@@ -253,8 +221,12 @@ public class ControllerDipendenti extends HttpServlet {
 	}
 	
 	
-	
+	/**
+	 * Questo metodo serve per inizializzare la mappa estensioni<Integer,String> per dipendenti
+	 * dove Integer sara l'id della azienda e la Stringa sara l'estensione dell'immagine
+	 */
 	private void inizializareMappa() {
+		
 		List<String> nomi = new ArrayList<String>();
 		File[] files = new File("C:/Users/m3107/eclipse-workspace/JAITA58/10-Settimana/NoPlay_RestfulProj_v1.0/src/main/webapp/images").listFiles();
 		
@@ -262,7 +234,8 @@ public class ControllerDipendenti extends HttpServlet {
 			if(f.isFile())
 				nomi.add(f.getName());
 		}
-		 
+		
+		estensioni.clear();
 		for(String s : nomi) {
 			if(s.charAt(0) == 'd') {
 				this.estensioni.put(Integer.parseInt(s.split("[.]")[0].substring(1)), s.split("[.]")[1]);

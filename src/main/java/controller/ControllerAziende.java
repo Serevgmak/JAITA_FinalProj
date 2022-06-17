@@ -53,10 +53,6 @@ public class ControllerAziende extends HttpServlet {
         dao = DaoFactory.makeA();
         gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
         estensioni = new HashMap<Integer, String>();
-//        estensioni.put(0, "jpg");
-//        estensioni.put(1, "jpg");
-//        estensioni.put(2, "jpg");
-//        estensioni.put(3, "png");
         inizializareMappa();
     }
          
@@ -64,6 +60,7 @@ public class ControllerAziende extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+ 
 		Response ris = new Response("", null, estensioni);
 		String path = request.getPathInfo();
 		
@@ -74,7 +71,7 @@ public class ControllerAziende extends HttpServlet {
 			else
 				ris.setStatus("1500");     
 			
-		} else { 
+		} else {  
 			ris.setObject(dao.azienda(Integer.parseInt(path.substring(1))));
 		} 
 		
@@ -93,12 +90,7 @@ public class ControllerAziende extends HttpServlet {
 		Response ris = new Response("", null, null);
 		
 		Part jsonPart = request.getPart("json"); 
-		az = gson.fromJson(IOUtils.toString(jsonPart.getInputStream(), StandardCharsets.UTF_8), Azienda.class);
-		
-		
-		
-		
-		
+		az = gson.fromJson(IOUtils.toString(jsonPart.getInputStream(), StandardCharsets.UTF_8), Azienda.class);  
 		
 		if(dao.add(az)) {   
 			int addId = dao.getNextId() - 1;
@@ -153,7 +145,7 @@ public class ControllerAziende extends HttpServlet {
 					+ az.getId() 
 					+ "."
 					+ estensioni.get(az.getId()));
-		}				 
+		} 				 
 		
 		if(dao.update(az)) {
 			ris.setStatus("200"); 
@@ -214,7 +206,12 @@ public class ControllerAziende extends HttpServlet {
 	}
 	
 	
+	/**
+	 * Questo metodo serve per inizializzare la mappa estensioni<Integer,String> per aziende
+	 * dove Integer sara l'id della azienda e la Stringa sara l'estensione dell'immagine
+	 */
 	private void inizializareMappa() {
+		
 		List<String> nomi = new ArrayList<String>();
 		File[] files = new File("C:/Users/m3107/eclipse-workspace/JAITA58/10-Settimana/NoPlay_RestfulProj_v1.0/src/main/webapp/images").listFiles();
 		
@@ -223,6 +220,7 @@ public class ControllerAziende extends HttpServlet {
 				nomi.add(f.getName());
 		}
 		
+		estensioni.clear();
 		for(String s : nomi) {
 			if(s.charAt(0) == 'a') {
 				this.estensioni.put(Integer.parseInt(s.split("[.]")[0].substring(1)), s.split("[.]")[1]);

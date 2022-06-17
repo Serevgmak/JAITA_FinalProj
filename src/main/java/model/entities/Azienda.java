@@ -7,9 +7,9 @@ public class Azienda {
 	long pIva;
 	String indirizzo;
 	String mail;
-	int telefono;
+	long telefono;
 	
-	public Azienda(int id, String ragioneSociale, long pIva, String indirizzo, String mail, int telefono) {
+	public Azienda(int id, String ragioneSociale, long pIva, String indirizzo, String mail, long telefono) {
 		super();
 		this.id = id;
 		this.ragioneSociale = ragioneSociale;
@@ -63,11 +63,11 @@ public class Azienda {
 		this.mail = mail;
 	}
 
-	public int getTelefono() {
+	public long getTelefono() {
 		return telefono;
 	}
 
-	public void setTelefono(int telefono) {
+	public void setTelefono(long telefono) {
 		this.telefono = telefono;
 	}
 	

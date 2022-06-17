@@ -29,7 +29,6 @@ $(document).ready(function () {
                 $(`<option data-id="${ruolo.id}" value="${ruolo.id}">${ruolo.ruolo}</option>`).appendTo($('#selectFiltroRuoli'));
            		arrayRuoli.push(ruolo.ruolo);
             }
-            //$(`<option selected data-id="-1" value="">tutto</option>`).appendTo($('#outCat'));
 
         });     
     }
@@ -44,49 +43,9 @@ $(document).ready(function () {
                 $(`<option data-id="${az.id}" value="${az.id}">${az.ragioneSociale}</option>`).appendTo($('#inputSceltaAzienda'));
            		arrayAziende.push([az.id, az]);
             }
-            //$(`<option selected data-id="-1" value="">tutto</option>`).appendTo($('#outCat'));
-
         });     
     }
-    getAziende();    
-        
-        
-//    function getDipendenti(){
-//
-//        //lista aziende
-//        $.get('dipendenti', function(res){
-//
-//            $('#outputDip').html('');
-//            for(const dip of res.object){ 
-//                //console.log(gioco.datauscita);
-//                $(`<div style="height: 15vh;width: 100%;margin-top: 20px;text-align: center;">
-//                            <!-- terza riga 2, rettangolo con dettagli, suddiviso in due colonne-->
-//                            <div class="row rettangolo" data-id="${dip.id}"
-//                                style="margin-right: 0px;margin-left: 0px;height: 15vh;background: #accbe1; margin-top: 20px;margin-bottom: 5px;"
-//                                data-bs-toggle="modal" data-bs-target="#modal-1">
-//
-//                                <!-- colonna foto profilo-->
-//                                <div class="col-xl-3 profiloDipendente"
-//                                    style="height: 85%;margin-top: 1vh;margin-left: 1vh;  ">
-//                                </div>
-//                                <!-- colonna dati dipendente-->
-//                                <div class="col d-xl-flex justify-content-xl-start align-items-xl-center"
-//                                    style="height: 12vh;margin-top: 10px;padding-right: 12px;padding-left: 0px;">
-//                                    <p class="fs-4"
-//                                        style="font-family: 'Source Code Pro', monospace;font-style: italic;margin-left: 40px;margin-right: 110px;">
-//                                        ${dip.nome} ${dip.cognome}</p>
-//                                </div>
-//                            </div>
-//                        </div>`).appendTo($('#outputDip'));
-//
-//            }
-//
-//        });
-//
-//
-//    }
-//    getDipendenti();
-
+    getAziende();
 
 
 	function getDipendenti(){
@@ -98,40 +57,33 @@ $(document).ready(function () {
 			//console.log(estensioni.get("" + 0));
 			
             $('#outputDip').html(''); 
+            let idImgShow = 0;
 			for(const dip of res.object){
+				if(estensioni.has("" + dip.id)){
+					idImgShow = dip.id;
+				} else {
+					idImgShow = 0;
+				}
 				$(`<div data-bs-toggle="modal" data-bs-target="#modal-1">
                             <div class="rettangolo" data-id="${dip.id}">
                                 <table>
                                     <thead>
-                                        <th class="thLeft"><img id="imgDip" style="background:url('./images/d0.jpg')" src="./images/d${dip.id}.${estensioni.get("" + dip.id)}" ></th>
+                                        <th class="thLeft"><img id="imgDip" src="./images/d${idImgShow}.${estensioni.get("" + idImgShow)}" ></th>
                                         <th><p class="titoloLista">${dip.nome} ${dip.cognome}</p></th>
                                     </thead>
                                 </table>
                             </div>
                         </div>`).appendTo($('#outputDip'));	
-			
-			
 			}
-
         });
-
-
     }
-    getDipendenti();
-
-
-	
-        
-        
+    getDipendenti();    
         
     $('#outputDip').on('click', '.rettangolo', function () {
-
         const id = $(this).attr('data-id');
         inspectDip(id);
         getDipendenti();
-    })
-    
-    
+    })    
     
     function inspectDip(id) {
         $.get(`dipendenti/${id}`, function (res) {
@@ -151,8 +103,7 @@ $(document).ready(function () {
 				aziendaNome = "disponibile";
 				$('#aziendaRiferimento').html("")
 			}
-
-			
+	
 			$('#headerDett').html("")
 			$('#headerDett').append(`<h4>${res.object.nome} ${res.object.cognome}</h4>
                                                 <p class="text-secondary mb-1">${arrayRuoli[res.object.idRuolo - 1]}</p>
@@ -234,14 +185,10 @@ $(document).ready(function () {
                                         </div>
                                     </div>
                                 </div>`)
-			}
-            
-            
+			}        
         })
-		//getAziende();
     }
-    
-    
+      
     $('#bottoneAggiungi').click(function(){
     	$('#addNome').val(''); 
         $('#addCognome').val(''); 
@@ -251,11 +198,8 @@ $(document).ready(function () {
         $('#addSelectR').val('');
         $('#addSelectAz').val('');
     })
-    
-    
-    $('#modal-aggiunta').on('click', '#addBtn', function(){
-		
-		
+     
+    $('#modal-aggiunta').on('click', '#addBtn', function(){	
         const dip = {
 				id: 0,
                 nome: $('#addNome').val(),
@@ -271,64 +215,53 @@ $(document).ready(function () {
 		data.append('image', $('#formFileSm')[0].files[0]);
 		data.append('json', JSON.stringify(dip));
 		
-//		if(dip.idRuolo == -1){
-//			alert('Scegli ruolo');
-//		}
-		
         if(!editMode && dip.idRuolo != -1){
             addDipendente(data);
         }
-        
-        
-
-
-
-    });
-    
+    });  
     
     function addDipendente(data){
-		  console.log(data.get('json'));
 
-		  $.ajax({
-            url: 'dipendenti',
-            type: 'POST',
-            datatype : 'multipart/form-data',
-            data: data,
-            timeout: 0,
-            processData : false,
-            contentType : false,
-            success: function(res){
-                    //$('#outputDip').html('');
-                    //getDipendenti();                	
-                }
-            })
+//		  $.ajax({
+//            url: 'dipendenti',
+//            type: 'POST',
+//            datatype : 'multipart/form-data',
+//            data: data,
+//            timeout: 0,
+//            processData : false,
+//            contentType : false,
+//            success: function(res){
+//                    //$('#outputDip').html('');
+//                    //getDipendenti();                	
+//                }
+//            })
 
 
-//			var settings = {
-//  			"url": "dipendenti",
-//  			"method": "POST",
-//  			"timeout": 0,
-//  			"processData": false,
-//  			"mimeType": "multipart/form-data",
-//  			"contentType": false,
-//  			"data": data
-//			};
-//
-//			$.ajax(settings).done(function (response) {
-//				$('#modal-aggiunta').modal('hide');
-//  				$('#outputDip').html('');
-//              	getDipendenti();
-//			});
+			var settings = {
+  			"url": "dipendenti",
+  			"method": "POST",
+  			"timeout": 0,
+  			"processData": false,
+  			"mimeType": "multipart/form-data",
+  			"contentType": false,
+  			"data": data
+			};
+
+			$.ajax(settings).done(function (response) {
+				$('#modal-aggiunta').modal('hide');
+				if(response.status == "1500")
+					alert("Qualcosa e andato storto...");
+  				$('#outputDip').html('');
+              	getDipendenti();
+			}).fail(function(){
+				alert("Qualcosa e andato storto...");
+			});
 
     }
-    
-    
-    
     
     $('#modal-1').on('click', '#btnDel', function(){
         deleteDipendente(deleteId);
     })
-
 
     function deleteDipendente(id){
 
@@ -348,8 +281,6 @@ $(document).ready(function () {
     }
     
     
-    //////////////////////////////////////////////////////////////////////////////////////////
-    
     $('#modal-1').on('click', '#modificaDipendente', function(){
         editMode = true;
         
@@ -366,11 +297,7 @@ $(document).ready(function () {
 			
 			$('#inputSceltaRuolo').val(res.object.idRuolo);
 			$('#inputSceltaAzienda').val(res.object.idAzienda);
-
-           
-
         })
-
     })
     
     
@@ -387,62 +314,56 @@ $(document).ready(function () {
             let data = new FormData();
 			data.append('image', $('#formFileSmUpd')[0].files[0]);
 			data.append('json', JSON.stringify(editDip));
-            modificaDipendente(data);
-	
+            modificaDipendente(data);	
 	})
     
     function modificaDipendente(data) {
 			
-        $.ajax({
-            url: 'dipendenti',
-            type: 'PUT',
-            datatype: "multipart/form-data",
-            processData: false,
-            contentType: false,
-  			data: data,
-            success: function(res){
-                if (res.status == '200'){
-                    editMode = false;
-                    getDipendenti();
-                $('#modal-modificaDipendente').modal('hide');
-                $('#modal-1').modal('show');
-                } else if (res.status == '1500'){
-                    alert('Qualcosa e andato storto...');
-                }
-            }
-        })
-
-//		  var settings = {
-//  			"url": "dipendenti",
-//  			"method": "PUT",
-//  			"timeout": 0,
-//  			"processData": false,
-//  			"mimeType": "multipart/form-data",
-//  			"contentType": false,
-//  			"data": data
-//			};
-//
-//			$.ajax(settings).done(function (response) {
-//				editMode = false;
-//                getDipendenti();
+//        $.ajax({
+//            url: 'dipendenti',
+//            type: 'PUT',
+//            datatype: "multipart/form-data",
+//            processData: false,
+//            contentType: false,
+//  			data: data,
+//            success: function(res){
+//                if (res.status == '200'){
+//                    editMode = false;
+//                    getDipendenti();
 //                $('#modal-modificaDipendente').modal('hide');
 //                $('#modal-1').modal('show');
-//			});
+//                } else if (res.status == '1500'){
+//                    alert('Qualcosa e andato storto...');
+//                }
+//            }
+//        })
 
+		  var settings = {
+  			"url": "dipendenti",
+  			"method": "PUT",
+  			"timeout": 0,
+  			"processData": false,
+  			"mimeType": "multipart/form-data",
+  			"contentType": false,
+  			"data": data
+			};
 
+			$.ajax(settings).done(function (response) {
+				editMode = false;
+				if(response.status == "1500")
+					alert("Qualcosa e andato storto...");
+                getDipendenti();
+                $('#modal-modificaDipendente').modal('hide');
+                inspectDip(editId);
+                $('#modal-1').modal('show');
+			}).fail(function(){
+				alert("Qualcosa e andato storto...");
+			});
 
-
-
-    }
-    
-    
-    
-    
+    } 
     
     $('#selectFiltroRuoli').change(function(){
 		const idRuolo = $('#selectFiltroRuoli').val()
-		
-		console.log(idRuolo)
 		
 		if (idRuolo == "0"){
 			$('#outputDip').html('');
@@ -451,9 +372,7 @@ $(document).ready(function () {
 			$.get(`dipendenti/r${idRuolo}`, function(res){
 			let estensioni = new Map(Object.entries(res.estensioni));
             $('#outputDip').html('');
-            //console.log(res);
             for(const dip of res.object){ 
-                //console.log(gioco.datauscita);
                 $(`<div data-bs-toggle="modal" data-bs-target="#modal-1">
                             <div class="rettangolo" data-id="${dip.id}">
                                 <table>
@@ -464,17 +383,10 @@ $(document).ready(function () {
                                 </table>
                             </div>
                         </div>`).appendTo($('#outputDip'));
-
             }
-        	});
-			
+        	});	
 		}
-		})
-	
-	
-
-    
-   
+		}) 
 })
 
 
